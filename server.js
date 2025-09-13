@@ -3,10 +3,6 @@ const pg = require("pg");
 const cors = require("cors");
 const axios = require("axios");
 
-
-
-
-
 const express = require("express");
 const app = express();
 app.use(cors());
@@ -14,6 +10,11 @@ app.use(cors());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
+console.log("ssssssssss");
+console.log("s");
+
+console.log("ssssssssss");
+console.log("s");
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
