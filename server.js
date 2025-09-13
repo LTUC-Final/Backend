@@ -10,15 +10,6 @@ app.use(cors());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-console.log("ssssssssss");
-console.log("s");
-
-console.log("ssssssssss");
-console.log("s");
-
-console.log("hussam");
-
-console.log("adan");
 
 
 
