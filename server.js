@@ -10,7 +10,7 @@ app.use(cors());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-
+console.log("Adan Test")
 
 
 app.use((req, res) => {
