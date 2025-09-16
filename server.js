@@ -10,12 +10,19 @@ app.use(cors());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-console.log("ssssssssss");
-console.log("s");
+const postItem = require("./routes/postItem");
+app.use("/", postItem);
+const getAllCategory = require("./routes/getAllCategory");
+app.use("/", getAllCategory);
+const getAllOrderProvider = require("./routes/getAllOrderInProvider");
+app.use("/", getAllOrderProvider);
+const updatePriceOrderAndDetails = require("./routes/updatePriceOrderAndDetails");
+app.use("/", updatePriceOrderAndDetails);
+const updateStatusOrder = require("./routes/updateStatusOrder");
+app.use("/", updateStatusOrder);
 
-console.log("ssssssssss");
-console.log("s");
-
+const customerWriteReviewOfProdactOrder = require("./routes/customerWriteReviewOfProdactOrder");
+app.use("/", customerWriteReviewOfProdactOrder);
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
 });
