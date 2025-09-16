@@ -6,20 +6,20 @@ const axios = require("axios");
 const express = require("express");
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-console.log("ssssssssss");
-console.log("s");
-
-console.log("ssssssssss");
-console.log("s");
-
-console.log("hussam");
-
-console.log("adan");
-
+const reviews=require("./Routes/ReviewsProduct")
+app.use("/api" , reviews )
+const card=require("./Routes/ShowCardInUserDashboard")
+app.use("/api" , card )
+const cardPage=require("./Routes/DetailsOfCardInfo")
+app.use("/api" , cardPage )
+const cart=require("./Routes/AddCart")
+app.use("/api" , cart )
+const favPage=require("./Routes/AddFav")
+app.use("/api" , favPage )
 
 
 app.use((req, res) => {
