@@ -10,29 +10,6 @@ app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-const postItem = require("./routes/postItem");
-app.use("/", postItem);
-const getAllCategory = require("./routes/getAllCategory");
-app.use("/", getAllCategory);
-const getAllOrderProvider = require("./routes/getAllOrderInProvider");
-app.use("/", getAllOrderProvider);
-const updatePriceOrderAndDetails = require("./routes/updatePriceOrderAndDetails");
-app.use("/", updatePriceOrderAndDetails);
-const updateStatusOrder = require("./routes/updateStatusOrder");
-app.use("/", updateStatusOrder);
-
-const customerWriteReviewOfProdactOrder = require("./routes/customerWriteReviewOfProdactOrder");
-app.use("/", customerWriteReviewOfProdactOrder);
-const reviews=require("./Routes/ReviewsProduct")
-app.use("/api" , reviews )
-const card=require("./Routes/ShowCardInUserDashboard")
-app.use("/api" , card )
-const cardPage=require("./Routes/DetailsOfCardInfo")
-app.use("/api" , cardPage )
-const cart=require("./Routes/AddCart")
-app.use("/api" , cart )
-const favPage=require("./Routes/AddFav")
-app.use("/api" , favPage )
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
