@@ -8,27 +8,20 @@ const router = express.Router();
 router.use(cors());
 router.use(express.json());
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-//  this route to provider when write the details about custom  order and change the price and change the status to awaiting_approval
-router.put("/updatePriceOrderAndDetails/:order_id", async (req, res) => {
-  try {
-    const { price, details } = req.body;
-    console.log(req.body);
 
+router.put("/updateStatusOrder/on_progress/:order_id", async (req, res) => {
+  try {
     const order_id = req.params.order_id;
     console.log(order_id);
-    const status = "awaiting_approval";
+    const status = "on_progress";
     const response = await pool.query(
       `
-  update  orders set  
-  original_price=$1,
-  response_from_provider=$2,status=$3
-
-
-      WHERE order_id = $4
+  update  orders set  status=$1
+      WHERE order_id = $2
       RETURNING *;
 
        `,
-      [price, details, status, order_id]
+      [status, order_id]
     );
 
     res.json(response.rows[0]);
@@ -42,4 +35,5 @@ router.put("/updatePriceOrderAndDetails/:order_id", async (req, res) => {
     });
   }
 });
+
 module.exports = router;

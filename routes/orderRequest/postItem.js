@@ -42,28 +42,6 @@ router.post("/postItem", async (req, res) => {
     );
     res.json(response.rows[0]);
 
-    //       `
-    //   INSERT INTO image (
-    //     entityid,
-    //     "entitytype",
-    //     "imageurl",
-    //     "buildingid",
-    //     apartmentid
-
-    // ) VALUES (
-    //     $1,$2,$3,$4,$5
-    // ) RETURNING *;
-
-    //        `,
-    //       [
-    //         2,
-    //         "Apartment",
-    //         imageUrl,
-    //         InfoBuilding.buildingid,
-    //         InfoBuilding.apartmentid,
-    //       ]
-    //     );
-    //     res.json(response2.rows);
   } catch (error) {
     console.error("Error fetching  quiry :", error.message);
     let obj = {
