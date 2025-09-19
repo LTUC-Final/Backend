@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-
+//hussam 
 const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
 app.use("/api" , reviews )
 const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
@@ -20,7 +20,7 @@ const cart=require("./routes/UserDashboard/AddCart")
 app.use("/api" , cart )
 const favPage=require("./routes/UserDashboard/AddFav")
 app.use("/api" , favPage )
-
+// jawhara 
 const getUserProfile = require('./routes/customerProfile/getUserProfile.js');
 app.use('/api/user', getUserProfile);
 
