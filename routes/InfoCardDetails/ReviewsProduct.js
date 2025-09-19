@@ -23,7 +23,7 @@ route.get("/ReviewsProduct/:id", async (req, res) => {
       JOIN users u ON r.customer_id = u.user_id WHERE r.product_id=$1
     `, [id]);
 
-    res.json(result.rows[0]);
+    res.json(result.rows);
   } catch (error) {
     console.error(
       "Error fetching  quiry  in getAllOrderProvider router:",

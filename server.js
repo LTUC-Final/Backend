@@ -10,15 +10,15 @@ app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-const reviews=require("./Routes/ReviewsProduct")
+const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
 app.use("/api" , reviews )
-const card=require("./Routes/ShowCardInUserDashboard")
+const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
 app.use("/api" , card )
-const cardPage=require("./Routes/DetailsOfCardInfo")
+const cardPage=require("./routes/InfoCardDetails/DetailsOfCardInfo")
 app.use("/api" , cardPage )
-const cart=require("./Routes/AddCart")
+const cart=require("./routes/UserDashboard/AddCart")
 app.use("/api" , cart )
-const favPage=require("./Routes/AddFav")
+const favPage=require("./routes/UserDashboard/AddFav")
 app.use("/api" , favPage )
 
 
