@@ -8,13 +8,16 @@ route.get("/ShowCardInUserDashboard", async (req, res) => {
 
   try {
 
-    const card = await pool.query("SELECT p.provider_id ,u.firstname, s.category_id , s.name , s.location , s.price , s.image FROM products s JOIN providers p ON p.provider_id = s.provider_id JOIN users u ON u.user_id = p.user_id")
+    const card = await pool.query(`SELECT s.product_id , p.provider_id ,u.firstname , u.lastname, s.category_id , s.name , s.location , s.price , s.image 
+      FROM products s 
+      JOIN providers p ON p.provider_id = s.provider_id 
+      JOIN users u ON u.user_id = p.user_id`)
 
     if (card.rows.length === 0) {
       return res.status(404).json({ error: "No products found" });
     }
 
-    res.json(card.rows[0]);
+    res.json(card.rows);
   } catch (error) {
     console.error(
       "Error fetching  quiry  in getAllOrderProvider router:",
