@@ -10,6 +10,38 @@ app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
+const postItem = require("./routes/orderRequest/postItem");
+app.use("/", postItem);
+const getAllCategory = require("./routes/orderRequest/getAllCategory");
+app.use("/", getAllCategory);
+const getAllOrderProvider = require("./routes/orderRequest/getAllOrderInProvider");
+app.use("/", getAllOrderProvider);
+const updatePriceOrderAndDetails = require("./routes/orderRequest/updatePriceOrderAndDetails");
+app.use("/", updatePriceOrderAndDetails);
+const updateStatusOrderCompleted = require("./routes/orderRequest/updateStatusOrderCompleted");
+app.use("/", updateStatusOrderCompleted);
+
+
+
+const updateStatusOrderRejected = require("./routes/orderRequest/updateStatusOrderRejected");
+app.use("/", updateStatusOrderRejected);
+
+const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
+app.use("/", updateStatusOrderOn_progress);
+
+const addProviderInfo = require("./routes/profileProvider/addProviderInfo");
+app.use("/", addProviderInfo);
+
+const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
+app.use("/", customerWriteReviewOfProdactOrder);
+
+const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
+app.use("/", getAllOrderInCustomer);
+
+const a = require("./routes/a");
+app.use("/", a);
+
+
 const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
 app.use("/api" , reviews )
 const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
@@ -20,7 +52,6 @@ const cart=require("./routes/UserDashboard/AddCart")
 app.use("/api" , cart )
 const favPage=require("./routes/UserDashboard/AddFav")
 app.use("/api" , favPage )
-t
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
