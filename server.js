@@ -6,7 +6,7 @@ const axios = require("axios");
 const express = require("express");
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -40,6 +40,18 @@ app.use("/", getAllOrderInCustomer);
 
 const a = require("./routes/a");
 app.use("/", a);
+
+
+const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
+app.use("/api" , reviews )
+const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
+app.use("/api" , card )
+const cardPage=require("./routes/InfoCardDetails/DetailsOfCardInfo")
+app.use("/api" , cardPage )
+const cart=require("./routes/UserDashboard/AddCart")
+app.use("/api" , cart )
+const favPage=require("./routes/UserDashboard/AddFav")
+app.use("/api" , favPage )
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
