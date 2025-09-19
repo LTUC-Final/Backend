@@ -10,6 +10,17 @@ app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
+const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
+app.use("/api" , reviews )
+const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
+app.use("/api" , card )
+const cardPage=require("./routes/InfoCardDetails/DetailsOfCardInfo")
+app.use("/api" , cardPage )
+const cart=require("./routes/UserDashboard/AddCart")
+app.use("/api" , cart )
+const favPage=require("./routes/UserDashboard/AddFav")
+app.use("/api" , favPage )
+t
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
