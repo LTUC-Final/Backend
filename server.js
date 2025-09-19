@@ -33,6 +33,29 @@ app.use('/api/provider',getProviderProfile);
 const updateProviderProfile=require('./routes/providerProfile/updateProviderProfile.js');
 app.use('/api/provider',updateProviderProfile);
 
+const postItem = require("./routes/orderRequest/postItem");
+app.use("/", postItem);
+const getAllCategory = require("./routes/orderRequest/getAllCategory");
+app.use("/", getAllCategory);
+const getAllOrderProvider = require("./routes/orderRequest/getAllOrderInProvider");
+app.use("/", getAllOrderProvider);
+const updatePriceOrderAndDetails = require("./routes/orderRequest/updatePriceOrderAndDetails");
+app.use("/", updatePriceOrderAndDetails);
+const updateStatusOrderCompleted = require("./routes/orderRequest/updateStatusOrderCompleted");
+app.use("/", updateStatusOrderCompleted);
+
+const updateStatusOrderRejected = require("./routes/orderRequest/updateStatusOrderRejected");
+app.use("/", updateStatusOrderRejected);
+
+const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
+app.use("/", updateStatusOrderOn_progress);
+
+const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
+app.use("/", customerWriteReviewOfProdactOrder);
+
+const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
+app.use("/", getAllOrderInCustomer);
+
 const getProducts=require('./routes/providerProfile/getProducts.js');
 app.use('/api/provider',getProducts);
 
