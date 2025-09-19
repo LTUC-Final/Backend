@@ -9,8 +9,8 @@ router.use(cors());
 router.use(express.json());
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-router.get("/getAllOrderProvider", async (req, res) => {
-  const { provider_id } = req.query;
+router.get("/getAllOrderInCustomer/:user_id", async (req, res) => {
+  const { user_id } = req.params;
   console.log(req.params);
   try {
     const response = await pool.query(
@@ -41,9 +41,9 @@ pr.product_id,
     p.skills       AS provider_skills
      from orders o inner join users c  on o.customer_id=c.user_id inner join providers p  on o.provider_id=p.provider_id INNER JOIN users p_u ON p.user_id = p_u.user_id   LEFT  JOIN products pr     ON o.product_id = pr.product_id
 
- where o.provider_id=$1;
+ where o.customer_id=$1;
        `,
-      [provider_id]
+      [user_id]
     );
     res.json(response.rows);
   } catch (error) {
