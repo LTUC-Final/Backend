@@ -6,15 +6,40 @@ const axios = require("axios");
 const express = require("express");
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
+const getUserProfile = require('./routes/customerProfile/getUserProfile.js');
+app.use('/api/user', getUserProfile);
+
+const updateUserProfile = require('./routes/customerProfile/updateUserProfile.js');
+app.use('/api/user', updateUserProfile);
+
+const getProviderProfile=require('./routes/providerProfile/getProviderProfile.js');
+app.use('/api/provider',getProviderProfile);
+
+const updateProviderProfile=require('./routes/providerProfile/updateProviderProfile.js');
+app.use('/api/provider',updateProviderProfile);
+
+const getProducts=require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider',getProducts);
+
+const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
+app.use('/api/provider',getProviderReviews);
+
+const deleteProduct = require('./routes/providerProfile/deleteProduct.js');
+app.use('/api/provider',deleteProduct);
+
+const updateProduct = require('./routes/providerProfile/updateProduct.js');
+app.use('/api/provider',updateProduct);
+
+const addReview = require('./routes/providerProfile/addProviderReview.js');
+app.use('/api/provider',addReview);
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
 });
-
 pool
   .connect()
   .then((client) => {
