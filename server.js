@@ -5,10 +5,77 @@ const express = require("express");
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // مهم لـ req.body
 
-const port = process.env.PORT || 4000;
+app.use(express.json());
+const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+//hussam 
+const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
+app.use("/api" , reviews )
+const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
+app.use("/api" , card )
+const cardPage=require("./routes/InfoCardDetails/DetailsOfCardInfo")
+app.use("/api" , cardPage )
+const cart=require("./routes/UserDashboard/AddCart")
+app.use("/api" , cart )
+const favPage=require("./routes/UserDashboard/AddFav")
+app.use("/api" , favPage )
+// jawhara 
+const getUserProfile = require('./routes/customerProfile/getUserProfile.js');
+app.use('/api/user', getUserProfile);
+
+const updateUserProfile = require('./routes/customerProfile/updateUserProfile.js');
+app.use('/api/user', updateUserProfile);
+
+const getProviderProfile=require('./routes/providerProfile/getProviderProfile.js');
+app.use('/api/provider',getProviderProfile);
+
+const updateProviderProfile=require('./routes/providerProfile/updateProviderProfile.js');
+app.use('/api/provider',updateProviderProfile);
+
+//Omar
+
+const postItem = require("./routes/orderRequest/postItem");
+app.use("/", postItem);
+const getAllCategory = require("./routes/orderRequest/getAllCategory");
+app.use("/", getAllCategory);
+const getAllOrderProvider = require("./routes/orderRequest/getAllOrderInProvider");
+app.use("/", getAllOrderProvider);
+const updatePriceOrderAndDetails = require("./routes/orderRequest/updatePriceOrderAndDetails");
+app.use("/", updatePriceOrderAndDetails);
+const updateStatusOrderCompleted = require("./routes/orderRequest/updateStatusOrderCompleted");
+app.use("/", updateStatusOrderCompleted);
+
+const updateStatusOrderRejected = require("./routes/orderRequest/updateStatusOrderRejected");
+app.use("/", updateStatusOrderRejected);
+
+const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
+app.use("/", updateStatusOrderOn_progress);
+
+const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
+app.use("/", customerWriteReviewOfProdactOrder);
+
+const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
+app.use("/", getAllOrderInCustomer);
+
+const getProducts=require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider',getProducts);
+
+const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
+app.use('/api/provider',getProviderReviews);
+
+const deleteProduct = require('./routes/providerProfile/deleteProduct.js');
+app.use('/api/provider',deleteProduct);
+
+const updateProduct = require('./routes/providerProfile/updateProduct.js');
+app.use('/api/provider',updateProduct);
+
+const addReview = require('./routes/providerProfile/addProviderReview.js');
+app.use('/api/provider',addReview);
+
+
+
+
 
 // 🛒 Cart routes
 const getCartProducts = require("./routes/cart/getCartProducts");
@@ -39,8 +106,6 @@ app.use("/api/carts/item", removeFromCart);
 app.use("/api/orders", addToOrder);
 
 
-
-
 //app.use- payments
 app.use("/api/payments", getPaymentsByUser);  // Get payments by user_id
 app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
@@ -49,29 +114,33 @@ app.use("/api/payments", updatePaymentStatus);
 
 
 
-
-// 404 handler
 app.use((req, res) => {
-  res.status(404).send("Page not found <a href='/'>Back to home</a>");
+  res.status(404).send("Page not fond <a href='/'>back to home </a>");
 });
-
-// ✅ DB Connection
 pool
   .connect()
   .then((client) => {
-    return client.query("SELECT current_database(), current_user").then((res) => {
-      client.release();
+    return client
+      .query("SELECT current_database(), current_user")
+      .then((res) => {
+        client.release();
 
-      const dbName = res.rows[0].current_database;
-      const dbUser = res.rows[0].current_user;
-      console.log(`✅ Connected to PostgreSQL as user '${dbUser}' on database '${dbName}'`);
-    });
+        const dbName = res.rows[0].current_database;
+        const dbUser = res.rows[0].current_user;
+        console.log(" Connected to DB:", res.rows[0]);
+
+        console.log(
+          `Connected to PostgreSQL as user '${dbUser}' on database '${dbName}'`
+        );
+
+        console.log(`App listening on port http://localhost:${port}`);
+      });
   })
   .then(() => {
     app.listen(port, () => {
-      console.log(`🚀 Server running on http://localhost:${port}`);
+      console.log(`app listening on port http://localhost:${port}`);
     });
   })
   .catch((err) => {
-    console.error("❌ Could not connect to database:", err.message);
+    console.error("Could not connect to database:", err);
   });
