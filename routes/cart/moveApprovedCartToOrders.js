@@ -45,6 +45,12 @@ router.post("/moveApprovedCartToOrders/:user_id", async (req, res) => {
       ordersInserted.push(order.rows[0]);
     }
 
+const deleteAllCart= await pool.query(
+      `DELETE FROM cart WHERE customer_id = $1 AND status_pay = 'Approve'`,
+      [user_id]
+    );
+
+
     res.json({ ordersCreated: ordersInserted });
   } catch (err) {
     console.error("Error in moveApprovedCartToOrders:", err.message);
