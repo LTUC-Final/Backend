@@ -6,7 +6,7 @@ function getToken(req) {
     const parts = req.headers.authorization.split(" ");
     if (parts.length === 2 && /^Bearer$/i.test(parts[0])) return parts[1];
   }
-  if (req.query && req.query.token) return req.query.token; // للتجربة فقط
+  if (req.query && req.query.token) return req.query.token; 
   return null;
 }
 
