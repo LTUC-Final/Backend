@@ -11,7 +11,7 @@ router.get("/getUserProfile/:id",async (req, res) => {
     const result = await pool.query(
       " SELECT user_id, firstname,lastname, email, phone, profile_image,   created_at FROM users WHERE user_id = $1",
       [id]
-    );
+    ); 
    if (result.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
