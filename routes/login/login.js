@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-//Login page 
+//Login page
 const pg = require("pg");
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -10,17 +10,32 @@ const { comparePassword } = require("../_shared/password");
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    if (!email || !password) return res.status(400).json({ error: "Validation error" });
+    if (!email || !password)
+      return res.status(400).json({ error: "Validation error" });
 
-    const { rows } = await pool.query(
-      "SELECT user_id, first_name, last_name, email, password_hash, role FROM users WHERE email=$1",
-      [email]
-    );
-    if (rows.length === 0) return res.status(401).json({ error: "Invalid email or password" });
+    const { rows } = await pool.query("SELECT * FROM users WHERE email=$1", [
+      email,
+    ]);
+    if (rows.length === 0)
+      return res.status(401).json({ error: "Invalid email or password" });
 
     const user = rows[0];
     const ok = await comparePassword(password, user.password_hash);
-    if (!ok) return res.status(401).json({ error: "Invalid email or password" });
+    if (!ok)
+      return res.status(401).json({ error: "Invalid email or password" });
+
+    let providerInfo = null;
+    if (user.role === "provider") {
+      const { rows: providerRows } = await pool.query(
+        `SELECT provider_id, user_id, bio, skills, created_at
+           FROM providers
+          WHERE user_id = $1`,
+        [user.user_id]
+      );
+      if (providerRows.length > 0) {
+        providerInfo = providerRows[0];
+      }
+    }
 
     const token = jwt.sign(
       { user_id: user.user_id, role: user.role, email: user.email },
@@ -32,12 +47,9 @@ router.post("/login", async (req, res) => {
       message: "Login successful",
       token,
       user: {
-        user_id: user.user_id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        role: user.role
-      }
+        ...user,
+        provider: providerInfo,
+      },
     });
   } catch {
     res.status(500).json({ error: "Internal server error" });
