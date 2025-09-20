@@ -1,0 +1,47 @@
+const express = require("express");
+const router = express.Router();
+//Login page 
+const pg = require("pg");
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+const jwt = require("jsonwebtoken");
+const { comparePassword } = require("../_shared/password");
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: "Validation error" });
+
+    const { rows } = await pool.query(
+      "SELECT user_id, first_name, last_name, email, password_hash, role FROM users WHERE email=$1",
+      [email]
+    );
+    if (rows.length === 0) return res.status(401).json({ error: "Invalid email or password" });
+
+    const user = rows[0];
+    const ok = await comparePassword(password, user.password_hash);
+    if (!ok) return res.status(401).json({ error: "Invalid email or password" });
+
+    const token = jwt.sign(
+      { user_id: user.user_id, role: user.role, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      message: "Login successful",
+      token,
+      user: {
+        user_id: user.user_id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+module.exports = router;
