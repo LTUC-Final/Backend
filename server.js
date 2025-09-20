@@ -1,11 +1,11 @@
 require("dotenv").config();
 const pg = require("pg");
 const cors = require("cors");
-const axios = require("axios");
-
 const express = require("express");
+
 const app = express();
 app.use(cors());
+
 app.use(express.json());
 const port = process.env.PORT;
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -72,6 +72,47 @@ app.use('/api/provider',updateProduct);
 
 const addReview = require('./routes/providerProfile/addProviderReview.js');
 app.use('/api/provider',addReview);
+
+
+
+
+
+// 🛒 Cart routes
+const getCartProducts = require("./routes/cart/getCartProducts");
+const getCartSummary = require("./routes/cart/getCartSummary");
+const incrementQuantity = require("./routes/cart/incrementQuantity");
+const decrementQuantity = require("./routes/cart/decrementQuantity");
+const removeFromCart = require("./routes/cart/removeFromCart");
+
+const addToOrder = require("./routes/cart/addToOrders");
+
+
+// Payments routes
+const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
+const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
+const addPayment = require("./routes/payments/addPayment");
+const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+
+
+
+//app.use- carts
+app.use("/api/carts/products", getCartProducts);   // Get cart products by user_id
+
+app.use("/api/carts/summary", getCartSummary);     // Get cart summary by user_id
+app.use("/api/carts/increment", incrementQuantity);
+app.use("/api/carts/decrement", decrementQuantity);
+app.use("/api/carts/item", removeFromCart);
+      // Clear cart
+app.use("/api/orders", addToOrder);
+
+
+//app.use- payments
+app.use("/api/payments", getPaymentsByUser);  // Get payments by user_id
+app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
+app.use("/api/payments", addPayment);
+app.use("/api/payments", updatePaymentStatus);
+
+
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
