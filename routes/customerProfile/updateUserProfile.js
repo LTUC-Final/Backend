@@ -10,10 +10,14 @@ router.put('/updateUserProfile/:id', async (req, res) => {
 
   try {
     const result = await pool.query(
-      `UPDATE users 
-       SET firstname = $1, lastname = $2, phone = $3, profile_image = $4, email = $5
-       WHERE user_id = $6
-       RETURNING user_id, firstname, lastname, phone, profile_image, email;`,
+      `UPDATE users
+      SET firstname= COALESCE($1, firstname),
+      lastname= COALESCE($2, lastname),
+     phone= COALESCE($3, phone),
+     profile_image = COALESCE($4, profile_image),
+     email = COALESCE($5, email)
+    WHERE user_id = $6
+    RETURNING user_id, firstname, lastname, phone, profile_image, email;`,
       [firstname, lastname, phone, profile_image, email, id]
     );
 
