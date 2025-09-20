@@ -84,7 +84,7 @@ const incrementQuantity = require("./routes/cart/incrementQuantity");
 const decrementQuantity = require("./routes/cart/decrementQuantity");
 const removeFromCart = require("./routes/cart/removeFromCart");
 
-const addToOrder = require("./routes/cart/addToOrders");
+//const addToOrder = require("./routes/cart/addToOrders");// Omar remove  this file before merged
 
 
 // Payments routes
@@ -103,7 +103,7 @@ app.use("/api/carts/increment", incrementQuantity);
 app.use("/api/carts/decrement", decrementQuantity);
 app.use("/api/carts/item", removeFromCart);
       // Clear cart
-app.use("/api/orders", addToOrder);
+//app.use("/api/orders", addToOrder);//
 
 
 //app.use- payments
