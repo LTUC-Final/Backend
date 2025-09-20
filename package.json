@@ -1,12 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "E-commerce backend with carts and payments",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js",
+
+  
     "start": "node server.js",
-    "migrate": "psql \"$DATABASE_URL\" -f src/db/migrations/001_create_users_table.sql"
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+
   },
   "keywords": [],
   "author": "",
