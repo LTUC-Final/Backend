@@ -23,9 +23,8 @@ router.post("/moveApprovedCartToOrders/:user_id", async (req, res) => {
 
     const ordersInserted = [];
 
-    // 2. نقل كل عنصر إلى orders
     for (const item of cartItems.rows) {
-      const status = "pending"; // يمكن تغيير الحالة حسب المنطق
+      const status = "pending";  
       const order = await pool.query(
         `INSERT INTO orders
           (details_order_user, original_price, provider_id, product_id, quantity, customer_id, status, cart_id)
