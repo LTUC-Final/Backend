@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
       profile_image = null
     } = req.body || {};
 
-    if (!firstname || !firstname || !email || !password || !role)
+if (!firstname || !lastname || !email || !password || !role)
       return res.status(400).json({ error: "Validation error" });
 
     if (!allowedRoles.has(role))
