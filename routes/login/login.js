@@ -51,8 +51,14 @@ router.post("/login", async (req, res) => {
         provider: providerInfo,
       },
     });
-  } catch {
-    res.status(500).json({ error: "Internal server error" });
+  } catch (error) {
+    console.error("Error fetching  quiry :", error.message);
+    let obj = {
+      error: "somthing habpend  ",
+    };
+    res.status(500).json({
+      error: "Something went wrong while fetching a quiry.",
+    });
   }
 });
 
