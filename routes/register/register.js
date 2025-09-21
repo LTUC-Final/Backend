@@ -12,8 +12,8 @@ router.post("/register", async (req, res) => {
   const client = await pool.connect();
   try {
     const {
-      first_name,
-      last_name,
+      firstname,
+      lastname,
       email,
       password,
       role,
@@ -21,7 +21,7 @@ router.post("/register", async (req, res) => {
       profile_image = null
     } = req.body || {};
 
-    if (!first_name || !last_name || !email || !password || !role)
+    if (!firstname || !firstname || !email || !password || !role)
       return res.status(400).json({ error: "Validation error" });
 
     if (!allowedRoles.has(role))
@@ -34,10 +34,10 @@ router.post("/register", async (req, res) => {
 
     const password_hash = await hashPassword(password);
     const userRes = await client.query(
-      `INSERT INTO users (first_name, last_name, email, password_hash, role, phone, profile_image)
+      `INSERT INTO users (firstname, lastname, email, password_hash, role, phone, profile_image)
        VALUES ($1,$2,$3,$4,$5,$6,$7)
        RETURNING user_id, role`,
-      [first_name, last_name, email, password_hash, role, phone, profile_image]
+      [firstname, lastname, email, password_hash, role, phone, profile_image]
     );
 
     const user = userRes.rows[0];
@@ -53,11 +53,14 @@ router.post("/register", async (req, res) => {
         ? "Registered successfully as provider"
         : "Registered successfully as customer"
     });
-  } catch {
-    try { await client.query("ROLLBACK"); } catch {}
-    res.status(500).json({ error: "Internal server error" });
-  } finally {
-    client.release();
+  }  catch (error) {
+    console.error("Error fetching  quiry :", error.message);
+    let obj = {
+      error: "somthing habpend  ",
+    };
+    res.status(500).json({
+      error: "Something went wrong while fetching a quiry.",
+    });
   }
 });
 
