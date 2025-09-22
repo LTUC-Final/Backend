@@ -22,6 +22,8 @@ router.get("/getAllOrderInCustomer/:user_id", async (req, res) => {
     c.phone     AS customer_phone,
     c.profile_image AS customer_profile_image,
 
+ cat.name AS categories_name,
+
     p_u.user_id   AS provider_user_id,
     p_u.firstname AS provider_firstname,
     p_u.lastname  AS provider_lastname,
@@ -39,7 +41,11 @@ pr.product_id,
     p.provider_id,
     p.bio          AS provider_bio,
     p.skills       AS provider_skills
-     from orders o inner join users c  on o.customer_id=c.user_id inner join providers p  on o.provider_id=p.provider_id INNER JOIN users p_u ON p.user_id = p_u.user_id   LEFT  JOIN products pr     ON o.product_id = pr.product_id
+     from orders o inner join users c  on o.customer_id=c.user_id
+      inner join providers p  on o.provider_id=p.provider_id
+       INNER JOIN users p_u ON p.user_id = p_u.user_id
+     LEFT  JOIN products pr     ON o.product_id = pr.product_id
+      LEFT JOIN categories cat     ON pr.category_id = cat.category_id
 
  where o.customer_id=$1;
        `,
