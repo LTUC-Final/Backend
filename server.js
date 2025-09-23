@@ -105,7 +105,6 @@ app.use("/api/carts/item", removeFromCart);
       // Clear cart
 
 
-app.use("/api/orders", addToOrder);
 
 
 //app.use- payments
@@ -113,6 +112,17 @@ app.use("/api/payments", getPaymentsByUser);  // Get payments by user_id
 app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
 app.use("/api/payments", addPayment);
 app.use("/api/payments", updatePaymentStatus);
+
+
+//  Routers
+const stripeCheckout = require("./routes/payments/stripeCheckout");
+const getStripeSession = require("./routes/payments/getStripeSession");
+
+//  استخدم المسارات
+app.use("/api/payments", stripeCheckout);
+app.use("/api/payments", getStripeSession);
+
+
 
 
 
