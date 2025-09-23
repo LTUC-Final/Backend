@@ -52,13 +52,15 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching  quiry :", error.message);
-    let obj = {
-      error: "somthing habpend  ",
-    };
-    res.status(500).json({
-      error: "Something went wrong while fetching a quiry.",
-    });
+    // console.error("Error fetching  quiry :", error.message);
+    // let obj = {
+    //   error: "somthing habpend  ",
+    // };
+    // res.status(500).json({
+    //   error: "Something went wrong while fetching a quiry.",
+    // });
+      console.error("Login backend error:", error);
+  res.status(500).json({ error: error.message });
   }
 });
 
