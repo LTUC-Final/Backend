@@ -8,6 +8,7 @@ const express = require("express");
 
 const app = express();
 app.use(cors());
+app.use(express.json()); 
 
 
 
@@ -98,14 +99,12 @@ app.use('/api/provider',addReview);
 
 
 
-// 🛒 Cart routes
+
 const getCartProducts = require("./routes/cart/getCartProducts");
 const getCartSummary = require("./routes/cart/getCartSummary");
 const incrementQuantity = require("./routes/cart/incrementQuantity");
 const decrementQuantity = require("./routes/cart/decrementQuantity");
 const removeFromCart = require("./routes/cart/removeFromCart");
-
-//const addToOrder = require("./routes/cart/addToOrders");// Omar remove  this file before merged
 
 
 // Payments routes
@@ -124,7 +123,6 @@ app.use("/api/carts/increment", incrementQuantity);
 app.use("/api/carts/decrement", decrementQuantity);
 app.use("/api/carts/item", removeFromCart);
       // Clear cart
-//app.use("/api/orders", addToOrder);//
 
 
 //app.use- payments
@@ -134,11 +132,23 @@ app.use("/api/payments", addPayment);
 app.use("/api/payments", updatePaymentStatus);
 
 
+//  Routers
+const stripeCheckout = require("./routes/payments/stripeCheckout");
+const getStripeSession = require("./routes/payments/getStripeSession");
+
+//  استخدم المسارات
+app.use("/api/payments", stripeCheckout);
+app.use("/api/payments", getStripeSession);
+
+
+
+
 
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
 });
+
 pool
   .connect()
   .then((client) => {
@@ -146,6 +156,7 @@ pool
       .query("SELECT current_database(), current_user")
       .then((res) => {
         client.release();
+
         const dbName = res.rows[0].current_database;
         const dbUser = res.rows[0].current_user;
         console.log(" Connected to DB:", res.rows[0]);
@@ -155,10 +166,11 @@ pool
   })
   .then(() => {
     app.listen(port, () => {
-      console.log(`app listening on port http://localhost:${port}`);
+      console.log(` Server running on http://localhost:${port}`);
     });
   })
   .catch((err) => {
+
     console.error("Could not connect to database:", err);
   });
 
