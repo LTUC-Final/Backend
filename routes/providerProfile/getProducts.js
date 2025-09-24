@@ -4,7 +4,7 @@ const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 router.get('/getProviderProducts/:provider_id', async (req, res) => {
-  const { provider_id } = req.params;
+    const { provider_id } = req.params;
 
   try {
     const result = await pool.query(
@@ -12,6 +12,9 @@ router.get('/getProviderProducts/:provider_id', async (req, res) => {
        FROM products
        WHERE provider_id = $1`,
       [provider_id]
+     
+      
+
     );
 
     if (result.rows.length === 0) {

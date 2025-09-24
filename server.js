@@ -38,7 +38,24 @@ app.use("/api/provider", getProviderProfile);
 const updateProviderProfile = require("./routes/providerProfile/updateProviderProfile.js");
 app.use("/api/provider", updateProviderProfile);
 
+
+const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
+app.use('/api/provider',updateProductByUserId);
+
+const getProducts=require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider',getProducts);
+
+const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
+app.use('/api/provider',getProviderReviews);
+
+const deleteProduct = require('./routes/providerProfile/hideProduct.js');
+app.use('/api/provider',deleteProduct);
+
+const updateProduct = require('./routes/providerProfile/updateProduct.js');
+app.use('/api/provider',updateProduct);
+
 //Omar
+//g
 
 const postItem = require("./routes/orderRequest/postItem");
 app.use("/", postItem);
@@ -79,6 +96,7 @@ app.use("/api/provider", deleteProduct);
 
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
+
 
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
