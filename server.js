@@ -26,6 +26,7 @@ const cart=require("./routes/UserDashboard/AddCart")
 app.use("/api" , cart )
 const favPage=require("./routes/UserDashboard/AddFav")
 app.use("/api" , favPage )
+
 // jawhara 
 const getUserProfile = require('./routes/customerProfile/getUserProfile.js');
 app.use('/api/user', getUserProfile);
@@ -38,6 +39,21 @@ app.use('/api/provider',getProviderProfile);
 
 const updateProviderProfile=require('./routes/providerProfile/updateProviderProfile.js');
 app.use('/api/provider',updateProviderProfile);
+
+const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
+app.use('/api/provider',updateProductByUserId);
+
+const getProducts=require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider',getProducts);
+
+const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
+app.use('/api/provider',getProviderReviews);
+
+const deleteProduct = require('./routes/providerProfile/hideProduct.js');
+app.use('/api/provider',deleteProduct);
+
+const updateProduct = require('./routes/providerProfile/updateProduct.js');
+app.use('/api/provider',updateProduct);
 
 //Omar
 
@@ -64,17 +80,7 @@ app.use("/", customerWriteReviewOfProdactOrder);
 const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
 app.use("/", getAllOrderInCustomer);
 
-const getProducts=require('./routes/providerProfile/getProducts.js');
-app.use('/api/provider',getProducts);
 
-const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
-app.use('/api/provider',getProviderReviews);
-
-const deleteProduct = require('./routes/providerProfile/deleteProduct.js');
-app.use('/api/provider',deleteProduct);
-
-const updateProduct = require('./routes/providerProfile/updateProduct.js');
-app.use('/api/provider',updateProduct);
 
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
