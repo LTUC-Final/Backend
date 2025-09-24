@@ -171,6 +171,8 @@ pool
   })
   .catch((err) => {
 
+
+    
     console.error("Could not connect to database:", err);
   });
 
