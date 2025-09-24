@@ -22,7 +22,7 @@ router.put("/updateStatusOrder/rejected/:order_id", async (req, res) => {
        `,
       [status, order_id]
     );
-
+    console.log("rejecteddddddddddd");
     res.json(response.rows[0]);
   } catch (error) {
     console.error("Error fetching  quiry :", error.message);
