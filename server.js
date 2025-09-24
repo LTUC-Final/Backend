@@ -85,18 +85,6 @@ app.use("/", customerWriteReviewOfProdactOrder);
 const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
 app.use("/", getAllOrderInCustomer);
 
-const getProducts = require("./routes/providerProfile/getProducts.js");
-app.use("/api/provider", getProducts);
-
-const getProviderReviews = require("./routes/providerProfile/getProviderReviews.js");
-app.use("/api/provider", getProviderReviews);
-
-const deleteProduct = require("./routes/providerProfile/deleteProduct.js");
-app.use("/api/provider", deleteProduct);
-
-const updateProduct = require("./routes/providerProfile/updateProduct.js");
-app.use("/api/provider", updateProduct);
-
 
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
