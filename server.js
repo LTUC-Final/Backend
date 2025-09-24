@@ -132,13 +132,13 @@ app.use("/api/payments", addPayment);
 app.use("/api/payments", updatePaymentStatus);
 
 
-//  Routers
-const stripeCheckout = require("./routes/payments/stripeCheckout");
-const getStripeSession = require("./routes/payments/getStripeSession");
+// //  Routers
+// const stripeCheckout = require("./routes/payments/stripeCheckout");
+// const getStripeSession = require("./routes/payments/getStripeSession");
 
-//  استخدم المسارات
-app.use("/api/payments", stripeCheckout);
-app.use("/api/payments", getStripeSession);
+// //  استخدم المسارات
+// app.use("/api/payments", stripeCheckout);
+// app.use("/api/payments", getStripeSession);
 
 
 
