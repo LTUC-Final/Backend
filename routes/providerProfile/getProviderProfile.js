@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const pg = require('pg');
+const pg = require("pg");
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 router.get("/getProviderProfile/:id", async (req, res) => {
   const { id } = req.params;
-
+  console.log(id);
   try {
     const result = await pool.query(
       `SELECT      
@@ -30,10 +30,10 @@ router.get("/getProviderProfile/:id", async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Provider profile not found" });
     }
+    console.log(result.rows);
 
-    res.json(result.rows[0]); 
-    console.log("result",result.rows[0]);
-    
+    res.json(result.rows[0]);
+    console.log("result", result.rows[0]);
   } catch (error) {
     console.error("Error fetching provider profile:", error);
     res.status(500).json({ message: "Server error" });
@@ -46,7 +46,7 @@ module.exports = router;
 
 //   try {
 //     const result = await pool.query(
-//       `SELECT 
+//       `SELECT
 //          providers.provider_id,
 //          users.user_id AS provider_user_id,
 //          users.firstname,
@@ -59,7 +59,7 @@ module.exports = router;
 //          users.created_at
 //        FROM providers
 //        JOIN users ON providers.user_id = users.user_id
-//        WHERE users.user_id = $1;`, 
+//        WHERE users.user_id = $1;`,
 //       [user_id]
 //     );
 
@@ -67,7 +67,7 @@ module.exports = router;
 //       return res.status(404).json({ message: "Provider profile not found" });
 //     }
 
-//     res.json(result.rows[0]); 
+//     res.json(result.rows[0]);
 //   } catch (error) {
 //     console.error("Error fetching provider profile:", error);
 //     res.status(500).json({ message: "Server error" });
