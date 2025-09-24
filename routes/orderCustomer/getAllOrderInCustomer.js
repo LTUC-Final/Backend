@@ -51,6 +51,7 @@ pr.product_id,
        `,
       [user_id]
     );
+    console.log(response.rows[0].datedelivery);
     res.json(response.rows);
   } catch (error) {
     console.error(
