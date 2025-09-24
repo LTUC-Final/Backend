@@ -3,13 +3,16 @@ const router = express.Router();
 const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
+ // this path will hide product  where isAvailable = FALSE not delete it from dp 
 router.delete('/deleteProduct/:provider_id/:product_id', async (req, res) => {
   const { product_id, provider_id } = req.params;
+    console.log('product_id:', product_id, 'provider_id:', provider_id);
 
   try {
     const result = await pool.query(
-      `DELETE FROM products
-       WHERE product_id = $1 AND provider_id = $2
+      `UPDATE products
+       set isAvailable = FALSE
+       WHERE product_id = $1 AND provider_id = $2 
        RETURNING *;`,
       [product_id, provider_id]
     );
