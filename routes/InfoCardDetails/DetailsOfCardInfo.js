@@ -12,7 +12,7 @@ route.get("/DetailsOfCardInfo/:id", async (req, res) => {
 
     try {
         const dataCard = await pool.query(
-            `SELECT s.product_id, s.provider_id,u.firstname,u.lastname,u.profile_image, c.category_id,c.name , c.description, s.name, s.location, s.description, s.price, s.type_of_product, s.image
+            `SELECT s.product_id, s.provider_id,u.firstname,u.role,u.lastname,u.profile_image, c.category_id,c.name , c.description, s.name, s.location, s.description, s.price, s.type_of_product, s.image
         FROM products s
         LEFT JOIN categories c ON c.category_id = s.category_id
         JOIN providers p ON p.provider_id = s.provider_id
