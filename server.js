@@ -99,6 +99,7 @@ app.use("/api/provider", hideProduct);
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
 
+
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
 const verifyOtpRoute = require("./routes/forgetpassword/verify_otp");
