@@ -5,13 +5,28 @@ const cors = require("cors");
 const axios = require("axios");
 
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 const port = process.env.PORT;
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/"); // المجلد
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname)); // اسم فريد
+//   },
+// });
+// const upload = multer({ storage });
+// app.use("/uploads", express.static("uploads"));
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 //hussam
@@ -38,21 +53,11 @@ app.use("/api/provider", getProviderProfile);
 const updateProviderProfile = require("./routes/providerProfile/updateProviderProfile.js");
 app.use("/api/provider", updateProviderProfile);
 
+const updateProductByUserId = require("./routes/providerProfile/getProductsByuserId.js");
+app.use("/api/provider", updateProductByUserId);
 
-const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
-app.use('/api/provider',updateProductByUserId);
-
-const getProducts=require('./routes/providerProfile/getProducts.js');
-app.use('/api/provider',getProducts);
-
-const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
-app.use('/api/provider',getProviderReviews);
-
-const deleteProduct = require('./routes/providerProfile/hideProduct.js');
-app.use('/api/provider',deleteProduct);
-
-const updateProduct = require('./routes/providerProfile/updateProduct.js');
-app.use('/api/provider',updateProduct);
+const getProducts = require("./routes/providerProfile/getProducts.js");
+app.use("/api/provider", getProducts);
 
 //Omar
 //g
@@ -85,18 +90,14 @@ app.use("/", customerWriteReviewOfProdactOrder);
 const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
 app.use("/", getAllOrderInCustomer);
 
-const getProducts = require("./routes/providerProfile/getProducts.js");
-app.use("/api/provider", getProducts);
-
 const getProviderReviews = require("./routes/providerProfile/getProviderReviews.js");
 app.use("/api/provider", getProviderReviews);
 
-const deleteProduct = require("./routes/providerProfile/deleteProduct.js");
-app.use("/api/provider", deleteProduct);
+const hideProduct = require("./routes/providerProfile/hideProduct.js");
+app.use("/api/provider", hideProduct);
 
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
-
 
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
