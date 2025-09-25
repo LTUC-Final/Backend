@@ -8,19 +8,19 @@ const router = express.Router();
 router.use(cors());
 router.use(express.json());
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-router.put("/updateStatusOrder/rejected/:order_id", async (req, res) => {
+router.put("/delivary/:selectedDate/:order_id", async (req, res) => {
   try {
     const order_id = req.params.order_id;
+    const selectedDate = req.params.selectedDate;
     console.log(order_id);
-    const status = "rejected";
+
     const response = await pool.query(
       `
-  update  orders set  status=$1
+  update  orders set  datedelivery=$1
       WHERE order_id = $2
       RETURNING *;
-
        `,
-      [status, order_id]
+      [selectedDate, order_id]
     );
     console.log("rejecteddddddddddd");
     res.json(response.rows[0]);

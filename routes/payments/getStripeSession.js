@@ -8,7 +8,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.get("/session/:sessionId", async (req, res) => {
   try {
-    const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+    const session = await stripe.checkout.sessions.retrieve(
+      req.params.sessionId
+    );
     res.json(session);
   } catch (err) {
     console.error("Error fetching Stripe session:", err.message);

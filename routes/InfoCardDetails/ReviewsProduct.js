@@ -16,6 +16,7 @@ route.get("/ReviewsProduct/:id", async (req, res) => {
         r.rating,
         r.review_text,
         r.created_at,
+        u.role,
         u.user_id AS customer_id,
         u.firstname AS customer_name,
         u.profile_image AS customer_profile_image 
