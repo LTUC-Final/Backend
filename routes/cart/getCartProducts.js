@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
          c.custom_requirement,
          c.status_pay,
          c.price AS cart_price,
+         c.provider_response,
          u.firstname AS customer_firstname,
          u.lastname AS customer_lastname,
          u.profile_image AS customer_profile_image,
