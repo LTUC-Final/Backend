@@ -1,6 +1,8 @@
-const express = require("express");
-const multer = require("multer");
+
+const express = require('express');
+const multer = require('multer');
 const router = express.Router();
+
 
 const pg = require("pg");
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -65,3 +67,4 @@ router.put(
 );
 
 module.exports = router;
+
