@@ -1,35 +1,22 @@
 const express = require('express');
 const router = express.Router();
-<<<<<<< Updated upstream
-const multer = require('multer');
-const path = require('path');
-=======
+
 const multer = require("multer");
 const path = require("path");
 
->>>>>>> Stashed changes
 const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 const storage = multer.diskStorage({
-<<<<<<< Updated upstream
   destination: (req, file, cb) => {
     cb(null, 'uploads/'); 
   },
   filename: (req, file, cb) => {
-=======
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
->>>>>>> Stashed changes
     const uniqueName = Date.now() + path.extname(file.originalname);
     cb(null, uniqueName);
   },
 });
 const upload = multer({ storage });
-
-<<<<<<< Updated upstream
 
 router.patch('/updateProduct/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
@@ -38,17 +25,7 @@ router.patch('/updateProduct/:id', upload.single('image'), async (req, res) => {
   if (req.file) {
     fields.image = `http://localhost:${process.env.PORT || 5000}/uploads/${req.file.filename}`;
 ;
-=======
-router.patch('/updateProduct/:id', upload.single("image"), async (req, res) => {
-  const { id } = req.params;
-  const fields = req.body;
-
-  // If an image is uploaded, add it to the fields
-  if (req.file) {
-    fields.image = `/uploads/${req.file.filename}`;
->>>>>>> Stashed changes
   }
-
   const keys = Object.keys(fields);
   const values = Object.values(fields);
 
@@ -75,9 +52,8 @@ router.patch('/updateProduct/:id', upload.single("image"), async (req, res) => {
   }
 });
 
-<<<<<<< Updated upstream
 module.exports = router;
-=======
+
 // router.patch('/updateProduct/:id', upload.single("image"),async (req, res) => {
 //   const { id } = req.params; 
 //   const fields = req.body;     
@@ -104,5 +80,4 @@ module.exports = router;
 //     res.status(500).json({ message: err.message });
 //   }
 // });
-module.exports = router;
->>>>>>> Stashed changes
+

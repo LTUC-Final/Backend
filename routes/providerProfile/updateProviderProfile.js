@@ -18,21 +18,12 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-<<<<<<< Updated upstream
+
 
 router.put("/updateProviderProfile/:id",  upload.single("profile_image"),async (req, res) => {
   const { id } = req.params;
   const { firstname, lastname, email, phone, bio, skills } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-=======
-router.put("/updateProviderProfile/:id", upload.single("profile_image"), async (req, res) => {
-  const { id } = req.params;
-  const { firstname, lastname,
-     email, phone,
-      // profile_image,
-       bio, skills } = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
->>>>>>> Stashed changes
 
   try {
     const userUpdate = await pool.query(
