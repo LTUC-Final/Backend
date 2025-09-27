@@ -11,6 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+
  "dependencies": {
   "@stripe/stripe-js": "^7.9.0",
   "axios": "^1.12.1",
@@ -31,5 +32,6 @@
 },
 "devDependencies": {
   "nodemon": "^3.1.10"
+
 }
 }

@@ -116,8 +116,37 @@ app.use("/api", resetPasswordRoute);
 app.use("/api", loginRoute);
 app.use("/api", logoutRoute);
 app.use("/api", wishlistRoute);
+
+
+
+
+/////  استدعاء باقي الـ routes
+const moveApprovedCartToOrders = require("./routes/cart/moveApprovedCartToOrders");
+
+const changeStatusPayOfProdactAfterApprove = require("./routes/cart/changeStatusPayOfProdactAfterApprove");
+const changeStatusPayOfProdactAfterRejected = require("./routes/cart/changeStatusPayOfProdactAfterRejected");
+const deleteCart = require("./routes/cart/deleteCart");
+const updateTheCustomReqAndToOrder = require("./routes/cart/updateTheCustomReqAndToOrder");
+
+
+
+const changeStatusPay = require("./routes/cart/changeStatusPay");
+app.use("/api/carts", changeStatusPay);
+
+
+
+
+app.use("/api/carts", changeStatusPayOfProdactAfterApprove);
+app.use("/api/carts", changeStatusPayOfProdactAfterRejected);
+app.use("/api/carts", deleteCart);
+app.use("/api/carts", updateTheCustomReqAndToOrder);
+app.use("/api/carts", moveApprovedCartToOrders);
+
+
+
 const addReview = require("./routes/providerProfile/addProviderReview.js");
 app.use("/api/provider", addReview);
+
 
 const getCartProducts = require("./routes/cart/getCartProducts");
 const getCartSummary = require("./routes/cart/getCartSummary");
@@ -125,11 +154,8 @@ const incrementQuantity = require("./routes/cart/incrementQuantity");
 const decrementQuantity = require("./routes/cart/decrementQuantity");
 const removeFromCart = require("./routes/cart/removeFromCart");
 
-// Payments routes
-const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
-const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
-const addPayment = require("./routes/payments/addPayment");
-const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+
+
 
 //app.use- carts
 app.use("/api/carts/products", getCartProducts); // Get cart products by user_id
@@ -138,6 +164,16 @@ app.use("/api/carts/summary", getCartSummary); // Get cart summary by user_id
 app.use("/api/carts/increment", incrementQuantity);
 app.use("/api/carts/decrement", decrementQuantity);
 app.use("/api/carts/item", removeFromCart);
+      
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Payments routes
+// Payments routes
+const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
+const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
+const addPayment = require("./routes/payments/addPayment");
+const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+
 // Clear cart
 
 //app.use- payments
@@ -150,9 +186,13 @@ app.use("/api/payments", updatePaymentStatus);
 const stripeCheckout = require("./routes/payments/stripeCheckout");
 const getStripeSession = require("./routes/payments/getStripeSession");
 
-//  استخدم المسارات
+app.use("/api/payments", getPaymentsByUser);
+app.use("/api/payments", getPaymentsSummary);
+app.use("/api/payments", addPayment);
+app.use("/api/payments", updatePaymentStatus);
 app.use("/api/payments", stripeCheckout);
 app.use("/api/payments", getStripeSession);
+
 
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");

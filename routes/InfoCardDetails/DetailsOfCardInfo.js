@@ -10,6 +10,7 @@ route.get("/DetailsOfCardInfo/:id", async (req, res) => {
     return res.status(400).json({ error: "Invalid product ID" });
   }
 
+
   try {
     const dataCard = await pool.query(
       `SELECT s.product_id, s.provider_id,u.firstname,u.user_id,u.role,u.lastname,u.profile_image, c.category_id,c.name , c.description, s.name, s.location, s.description, s.price, s.type_of_product, s.image
