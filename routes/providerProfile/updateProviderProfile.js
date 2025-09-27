@@ -1,11 +1,38 @@
 const express = require('express');
+const multer = require('multer');
 const router = express.Router();
+const multer = require("multer");
+const path = require("path");
+
 const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const path = require("path");
 
-router.put("/updateProviderProfile/:id", async (req, res) => {
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  },
+});
+const upload = multer({ storage });
+<<<<<<< Updated upstream
+
+router.put("/updateProviderProfile/:id",  upload.single("profile_image"),async (req, res) => {
   const { id } = req.params;
-  const { firstname, lastname, email, phone, profile_image, bio, skills } = req.body;
+  const { firstname, lastname, email, phone, bio, skills } = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+=======
+router.put("/updateProviderProfile/:id", upload.single("profile_image"), async (req, res) => {
+  const { id } = req.params;
+  const { firstname, lastname,
+     email, phone,
+      // profile_image,
+       bio, skills } = req.body;
+        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+>>>>>>> Stashed changes
 
   try {
     const userUpdate = await pool.query(
@@ -17,7 +44,7 @@ router.put("/updateProviderProfile/:id", async (req, res) => {
            profile_image = COALESCE($5, profile_image)
        WHERE user_id = $6
        RETURNING user_id, firstname, lastname, email, phone, profile_image;`,
-      [firstname, lastname, email, phone, profile_image, id]
+      [firstname, lastname, email, phone, imagePath, id]
     );
 
     const providerUpdate = await pool.query(
