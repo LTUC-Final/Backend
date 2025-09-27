@@ -4,11 +4,11 @@ const router = express.Router();
 const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-router.post("/postReview/:providerId", async (req, res) => {
-  const { providerId } = req.params;
-  const { rating, review_text,customer_id } = req.body; //need update for test added customerId
+router.post("/postReview/:providerId/:customer_id", async (req, res) => {
+  const { providerId,customer_id } = req.params;
+  const { rating, review_text } = req.body; //need update for test added customerId
 
-//   const customer_id = req.user.user_id; // FROM AUTH
+  // const customer_id = req.user.user_id; // FROM AUTH
 
   try {
     const existing = await pool.query(
