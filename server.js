@@ -5,7 +5,6 @@ const cors = require("cors");
 const axios = require("axios");
 
 const express = require("express");
-const multer = require("multer");
 const path = require("path");
 
 const app = express();
