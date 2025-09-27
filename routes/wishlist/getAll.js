@@ -30,10 +30,16 @@ router.get("/wishlist", async (req, res) => {
     const userId = payload.user_id;
 
     const { rows } = await pool.query(
-      `SELECT wishlist_id, customer_id, product_id, created_at
-       FROM wishlist
-       WHERE customer_id = $1
-       ORDER BY created_at DESC`,
+      `SELECT w.wishlist_id,
+              w.product_id,
+              p.name,
+              p.price,
+              p.image,
+              p.provider_id
+       FROM wishlist w
+       JOIN products p ON w.product_id = p.product_id
+       WHERE w.customer_id = $1
+       ORDER BY w.wishlist_id DESC`,
       [userId]
     );
 
@@ -60,10 +66,16 @@ router.get("/wishlist/:userId", async (req, res) => {
     if (String(payload.user_id) !== String(userId)) return res.status(403).json({ error: "Forbidden" });
 
     const { rows } = await pool.query(
-      `SELECT wishlist_id, customer_id, product_id, created_at
-       FROM wishlist
-       WHERE customer_id = $1
-       ORDER BY created_at DESC`,
+      `SELECT w.wishlist_id,
+              w.product_id,
+              p.name,
+              p.price,
+              p.image,
+              p.provider_id
+       FROM wishlist w
+       JOIN products p ON w.product_id = p.product_id
+       WHERE w.customer_id = $1
+       ORDER BY w.wishlist_id DESC`,
       [userId]
     );
 
