@@ -20,6 +20,7 @@ router.get("/getProviderReviews/:id", async (req, res) => {
     c.user_id AS customer_id,
     c.firstname AS customer_firstname,
     c.lastname AS customer_lastname,
+    c.profile_image As profile_image,
 
     p.provider_id,
     u.user_id AS provider_user_id,
@@ -41,6 +42,7 @@ WHERE rp.provider_id = $1;`,
     }
 
     res.json(result.rows);
+    console.log("Fetching reviews from DB for provider_id:", id);
 
   } catch (error) {
     console.log("error fetching Provider profile ", error);
