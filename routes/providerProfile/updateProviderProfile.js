@@ -1,8 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
-const multer = require("multer");
-const path = require("path");
+
 
 const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
@@ -62,3 +61,4 @@ router.put("/updateProviderProfile/:id",  upload.single("profile_image"),async (
 });
 
 module.exports = router;
+
