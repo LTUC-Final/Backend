@@ -107,6 +107,7 @@ const resetPasswordRoute = require("./routes/forgetpassword/reset_password");
 const loginRoute = require("./routes/login/login");
 const logoutRoute = require("./routes/login/logout");
 const wishlistRoute = require("./routes/wishlist/getAll");
+const topOrderedRoutes = require("./routes/TopOrders/topOrdered");
 
 app.use("/api", registerRoute);
 app.use("/api", forgotRoute);
@@ -115,6 +116,7 @@ app.use("/api", resetPasswordRoute);
 app.use("/api", loginRoute);
 app.use("/api", logoutRoute);
 app.use("/api", wishlistRoute);
+app.use("/api", topOrderedRoutes);
 const addReview = require("./routes/providerProfile/addProviderReview.js");
 app.use("/api/provider", addReview);
 
