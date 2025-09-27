@@ -1,4 +1,4 @@
-//routes/carts/addCustomRequirement.js
+//routes/cart/changeStatusPay.js
 const express = require("express");
 const pg = require("pg");
 const cors = require("cors");
@@ -24,7 +24,7 @@ router.put("/changeStatusPay", async (req, res) => {
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error("Error in addCustomRequirement:", err.message);
+    console.error("Error in changeStatusPay:", err.message);
     res.status(500).json({ message: "Error adding custom requirement" });
   }
 });
