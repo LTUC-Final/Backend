@@ -9,7 +9,6 @@ router.use(cors());
 router.use(express.json());
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-
 router.put("/updateTheCustomReqAndToOrder", async (req, res) => {
   try {
     const {
@@ -22,12 +21,25 @@ router.put("/updateTheCustomReqAndToOrder", async (req, res) => {
       provider_id,
       quntity,
     } = req.body;
+
+    console.log(
+      cart_id,
+      user_id,
+      custom_requirement,
+      price,
+      Prodact_id,
+
+      provider_id,
+      quntity
+    );
     const result = await pool.query(
       `UPDATE cart 
-       SET custom_requirement = $1
-       WHERE cart_id = $2 AND customer_id = $3
-       RETURNING *`,
-      [custom_requirement, cart_id, user_id]
+   SET custom_requirement = $1,
+       sendedtoprovider = TRUE,
+       status_pay = 'Unapprove', quantity=$4
+   WHERE cart_id = $2 AND customer_id = $3
+   RETURNING *`,
+      [custom_requirement, cart_id, user_id, quntity]
     );
 
     const status = "awaiting_approval";
