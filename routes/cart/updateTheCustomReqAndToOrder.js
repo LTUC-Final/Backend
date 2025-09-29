@@ -36,10 +36,10 @@ router.put("/updateTheCustomReqAndToOrder", async (req, res) => {
       `UPDATE cart 
    SET custom_requirement = $1,
        sendedtoprovider = TRUE,
-       status_pay = 'Unapprove'
+       status_pay = 'Unapprove', quantity=$4
    WHERE cart_id = $2 AND customer_id = $3
    RETURNING *`,
-      [custom_requirement, cart_id, user_id]
+      [custom_requirement, cart_id, user_id, quntity]
     );
 
     const status = "awaiting_approval";
