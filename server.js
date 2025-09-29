@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT;
 // const storage = multer.diskStorage({
@@ -88,6 +88,14 @@ app.use("/", updateStatusOrderOn_progress);
 const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
 app.use("/", customerWriteReviewOfProdactOrder);
 
+const updateTheCustomReqAndToOrder = require("./routes/cart/updateTheCustomReqAndToOrder");
+app.use("/", updateTheCustomReqAndToOrder);
+
+const changeStatusPayOfProdactAfterApprove = require("./routes/cart/changeStatusPayOfProdactAfterApprove");
+app.use("/", changeStatusPayOfProdactAfterApprove);
+
+const changeStatusPayOfProdactAfterRejected = require("./routes/cart/changeStatusPayOfProdactAfterRejected");
+app.use("/", changeStatusPayOfProdactAfterRejected);
 const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
 app.use("/", getAllOrderInCustomer);
 
@@ -99,7 +107,6 @@ app.use("/api/provider", hideProduct);
 
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
-
 
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");

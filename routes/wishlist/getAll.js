@@ -57,7 +57,8 @@ router.get("/wishlist/:userId", async (req, res) => {
 
     const { userId } = req.params;
     if (!userId) return res.status(400).json({ error: "User ID is required" });
-    if (String(payload.user_id) !== String(userId)) return res.status(403).json({ error: "Forbidden" });
+    if (String(payload.user_id) !== String(userId))
+      return res.status(403).json({ error: "Forbidden" });
 
     const { rows } = await pool.query(
       `SELECT wishlist_id, customer_id, product_id, created_at
