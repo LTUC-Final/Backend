@@ -63,6 +63,8 @@ app.use("/api/provider", getProducts);
 //Omar
 //g
 
+const ai = require("./routes/ai/ai");
+app.use("/", ai);
 const postItem = require("./routes/orderRequest/postItem");
 app.use("/", postItem);
 const getAllCategory = require("./routes/orderRequest/getAllCategory");
