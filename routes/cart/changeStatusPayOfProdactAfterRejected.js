@@ -1,4 +1,3 @@
-
 const express = require("express");
 const pg = require("pg");
 const cors = require("cors");
@@ -13,8 +12,9 @@ router.put(
   "/changeStatusPayOfProdactAfterRejected/:cart_id",
   async (req, res) => {
     try {
-      const { cart_id } = req.params;
+      const cart_id = req.params.cart_id;
       const status = "rejected";
+      console.log(cart_id);
 
       const result1 = await pool.query(
         `UPDATE orders
@@ -31,10 +31,9 @@ router.put(
         [cart_id]
       );
 
-      res.json({
-        updatedOrder: result1.rows[0],
-        deletedCart: result.rows[0],
-      });
+      res.json(
+        result.row
+      );
     } catch (err) {
       console.error(
         "Error in changeStatusPayOfProdactAfterRejected:",
