@@ -44,7 +44,7 @@ router.post("/postItem", upload.single("image"), async (req, res) => {
        `,
       [
         Number(provider_id),
-    Number (category_id),
+        Number(category_id),
         name,
         location,
         description,

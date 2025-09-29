@@ -24,7 +24,7 @@ router.post("/moveApprovedCartToOrders/:user_id", async (req, res) => {
     const ordersInserted = [];
 
     for (const item of cartItems.rows) {
-      const status = "pending";  
+      const status = "pending";
       const order = await pool.query(
         `INSERT INTO orders
           (details_order_user, original_price, provider_id, product_id, quantity, customer_id, status, cart_id)
@@ -42,13 +42,18 @@ router.post("/moveApprovedCartToOrders/:user_id", async (req, res) => {
         ]
       );
       ordersInserted.push(order.rows[0]);
+      await pool.query(
+        `UPDATE products
+         SET timesordered = COALESCE(timesordered, 0) + 1
+         WHERE product_id = $1`,
+        [item.product_id]
+      );
     }
 
-const deleteAllCart= await pool.query(
+    const deleteAllCart = await pool.query(
       `DELETE FROM cart WHERE customer_id = $1 AND status_pay = 'Approve'`,
       [user_id]
     );
-
 
     res.json({ ordersCreated: ordersInserted });
   } catch (err) {

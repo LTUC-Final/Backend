@@ -12,20 +12,16 @@ router.get("/topordered", async (req, res) => {
         p.name,
         p.image AS image_url,
         p.price,
-        COUNT(o.order_id)::int AS order_count
-      FROM orders o
-      JOIN products p ON p.product_id = o.product_id
-      WHERE o.status = 'completed'
-      GROUP BY p.product_id, p.name, p.image, p.price, p.timesordered
+        COALESCE(p.timesordered, 0)::int AS timesordered
+      FROM products p
       ORDER BY
-        order_count DESC,
-        p.timesordered DESC NULLS LAST,
+        COALESCE(p.timesordered, 0) DESC,
         p.product_id ASC
       LIMIT 4;
     `;
     const { rows } = await pool.query(sql);
     res.json({ items: rows });
-  } catch {
+  } catch (err) {
     res.status(500).json({ error: "Failed to load top ordered items" });
   }
 });
