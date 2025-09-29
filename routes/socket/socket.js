@@ -8,8 +8,6 @@ const io = new Server({
         transports: ["websocket", "polling"]
     }
 });
-
-
 const users = {};
 io.users = users;
 
