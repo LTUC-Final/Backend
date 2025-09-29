@@ -1,32 +1,38 @@
 require("dotenv").config();
 const pg = require("pg");
 const cors = require("cors");
-
+// const io = require("./routes/socket/socket.js");
 const axios = require("axios");
 
 const express = require("express");
 
 const app = express();
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
 
 
 app.use(express.json());
 const port = process.env.PORT;
 
+const sendMessagesRoute=require("./routes/socket/RouteSocket.js")
+app.use("/api",sendMessagesRoute)
+
+const getMessages=require("./routes/socket/GetMessages.js")
+app.use("/api",getMessages)
+
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 //hussam 
-const reviews=require("./routes/InfoCardDetails/ReviewsProduct")
-app.use("/api" , reviews )
-const card=require("./routes/UserDashboard/ShowCardInUserDashboard")
-app.use("/api" , card )
-const cardPage=require("./routes/InfoCardDetails/DetailsOfCardInfo")
-app.use("/api" , cardPage )
-const cart=require("./routes/UserDashboard/AddCart")
-app.use("/api" , cart )
-const favPage=require("./routes/UserDashboard/AddFav")
-app.use("/api" , favPage )
+const reviews = require("./routes/InfoCardDetails/ReviewsProduct")
+app.use("/api", reviews)
+const card = require("./routes/UserDashboard/ShowCardInUserDashboard")
+app.use("/api", card)
+const cardPage = require("./routes/InfoCardDetails/DetailsOfCardInfo")
+app.use("/api", cardPage)
+const cart = require("./routes/UserDashboard/AddCart")
+app.use("/api", cart)
+const favPage = require("./routes/UserDashboard/AddFav")
+app.use("/api", favPage)
 
 // jawhara 
 const getUserProfile = require('./routes/customerProfile/getUserProfile.js');
@@ -35,26 +41,26 @@ app.use('/api/user', getUserProfile);
 const updateUserProfile = require('./routes/customerProfile/updateUserProfile.js');
 app.use('/api/user', updateUserProfile);
 
-const getProviderProfile=require('./routes/providerProfile/getProviderProfile.js');
-app.use('/api/provider',getProviderProfile);
+const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
+app.use('/api/provider', getProviderProfile);
 
-const updateProviderProfile=require('./routes/providerProfile/updateProviderProfile.js');
-app.use('/api/provider',updateProviderProfile);
+const updateProviderProfile = require('./routes/providerProfile/updateProviderProfile.js');
+app.use('/api/provider', updateProviderProfile);
 
 const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
-app.use('/api/provider',updateProductByUserId);
+app.use('/api/provider', updateProductByUserId);
 
-const getProducts=require('./routes/providerProfile/getProducts.js');
-app.use('/api/provider',getProducts);
+const getProducts = require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider', getProducts);
 
-const getProviderReviews=require('./routes/providerProfile/getProviderReviews.js');
-app.use('/api/provider',getProviderReviews);
+const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
+app.use('/api/provider', getProviderReviews);
 
 const deleteProduct = require('./routes/providerProfile/hideProduct.js');
-app.use('/api/provider',deleteProduct);
+app.use('/api/provider', deleteProduct);
 
 const updateProduct = require('./routes/providerProfile/updateProduct.js');
-app.use('/api/provider',updateProduct);
+app.use('/api/provider', updateProduct);
 
 //Omar
 //g
@@ -100,7 +106,7 @@ app.use("/api", loginRoute);
 app.use("/api", logoutRoute);
 app.use("/api", wishlistRoute);
 const addReview = require('./routes/providerProfile/addProviderReview.js');
-app.use('/api/provider',addReview);
+app.use('/api/provider', addReview);
 
 
 
@@ -129,7 +135,7 @@ app.use("/api/carts/summary", getCartSummary);     // Get cart summary by user_i
 app.use("/api/carts/increment", incrementQuantity);
 app.use("/api/carts/decrement", decrementQuantity);
 app.use("/api/carts/item", removeFromCart);
-      // Clear cart
+// Clear cart
 
 
 //app.use- payments
