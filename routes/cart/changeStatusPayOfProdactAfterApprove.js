@@ -11,7 +11,7 @@ const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 router.put("/changeStatusPayOfProdactAfterApprove", async (req, res) => {
   try {
     const { cart_id, user_id } = req.body;
-
+    console.log(cart_id, user_id);
     const result = await pool.query(
       `UPDATE cart set 
        status_pay = 'Approve' 
