@@ -85,6 +85,12 @@ app.use("/", updateStatusOrderRejected);
 const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
 app.use("/", updateStatusOrderOn_progress);
 
+const moveApprovedCartToOrders = require("./routes/cart/moveApprovedCartToOrders");
+app.use("/", moveApprovedCartToOrders);
+
+const deleteCart = require("./routes/cart/deleteCart");
+app.use("/", deleteCart);
+
 const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
 app.use("/", customerWriteReviewOfProdactOrder);
 
