@@ -1,10 +1,11 @@
-const express = require("express");
-const multer = require("multer");
-const router = express.Router();
 
+const express = require('express');
+const multer = require('multer');
+const router = express.Router();
+const path = require("path");
 const pg = require("pg");
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-const path = require("path");
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -16,6 +17,7 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
 
 router.put(
   "/updateProviderProfile/:id",
@@ -35,8 +37,10 @@ router.put(
            profile_image = COALESCE($5, profile_image)
        WHERE user_id = $6
        RETURNING user_id, firstname, lastname, email, phone, profile_image;`,
+
         [firstname, lastname, email, phone, imagePath, id]
       );
+
 
       const providerUpdate = await pool.query(
         `UPDATE providers
@@ -65,3 +69,4 @@ router.put(
 );
 
 module.exports = router;
+
