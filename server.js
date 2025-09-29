@@ -32,6 +32,8 @@ const port = process.env.PORT;
 
 const sendMessagesRoute=require("./routes/socket/RouteSocket.js")
 app.use("/api",sendMessagesRoute)
+const Ess=require("./routes/ai/descAiRes.js")
+app.use("/api",Ess)
 
 const getMessages=require("./routes/socket/GetMessages.js")
 app.use("/api",getMessages)
@@ -60,8 +62,8 @@ const getProviderProfile = require("./routes/providerProfile/getProviderProfile.
 app.use("/api/provider", getProviderProfile);
 
 
-const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
-app.use('/api/provider', getProviderProfile);
+// const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
+// app.use('/api/provider', getProviderProfile);
 
 const updateProviderProfile = require('./routes/providerProfile/updateProviderProfile.js');
 app.use('/api/provider', updateProviderProfile);
@@ -72,14 +74,14 @@ app.use('/api/provider', updateProductByUserId);
 const getProducts = require('./routes/providerProfile/getProducts.js');
 app.use('/api/provider', getProducts);
 
-const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
-app.use('/api/provider', getProviderReviews);
+// const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
+// app.use('/api/provider', getProviderReviews);
 
 const deleteProduct = require('./routes/providerProfile/hideProduct.js');
 app.use('/api/provider', deleteProduct);
 
-const updateProduct = require('./routes/providerProfile/updateProduct.js');
-app.use('/api/provider', updateProduct);
+// const updateProduct = require('./routes/providerProfile/updateProduct.js');
+// app.use('/api/provider', updateProduct);
 
 
 //Omar
