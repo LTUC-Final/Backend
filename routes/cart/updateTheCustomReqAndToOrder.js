@@ -1,5 +1,3 @@
-//routes/carts/updateTheCustomReqAndToOrder     ديد بعد ما    // ارسال الموفر functios 
-//routes/carts/addCustomRequirement.js
 const express = require("express");
 const pg = require("pg");
 const cors = require("cors");

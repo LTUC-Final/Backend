@@ -8,7 +8,7 @@ router.use(express.json());
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// ✅ Get all payments for a specific customer
+//  Get all payments for a specific customer
 router.get("/user/:customerId", async (req, res) => {
   try {
     const { customerId } = req.params;
@@ -25,7 +25,7 @@ router.get("/user/:customerId", async (req, res) => {
         p.transaction_id,
         p.transaction_date,
 
-        -- ✅ المنتجات كلها المرتبطة بالدفع (string_agg)
+        --  المنتجات كلها المرتبطة بالدفع (string_agg)
         string_agg(DISTINCT pr.name, ', ') AS product_names,
 
         -- Customer info
@@ -65,7 +65,7 @@ router.get("/user/:customerId", async (req, res) => {
 
     res.status(200).json(result.rows);
   } catch (err) {
-    console.error("❌ Error fetching payments:", err);
+    console.error(" Error fetching payments:", err);
     res.status(500).json({ error: "Server error while fetching payments" });
   }
 });

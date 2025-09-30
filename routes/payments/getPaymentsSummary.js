@@ -8,7 +8,7 @@ router.use(express.json());
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// ✅ Get payments summary for a user (يشمل كل الحالات)
+//  Get payments summary for a user (يشمل كل الحالات)
 router.get("/summary/:userId", async (req, res) => {
   try {
     const { userId } = req.params;

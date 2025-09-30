@@ -12,7 +12,7 @@ router.put("/:paymentId", async (req, res) => {
     const { paymentId } = req.params;
     const { status, updated_by } = req.body;
 
-    console.log("📥 Update request:", { paymentId, status, updated_by });
+    console.log(" Update request:", { paymentId, status, updated_by });
 
     const validStatus = [
       "pending",

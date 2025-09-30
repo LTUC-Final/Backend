@@ -7,11 +7,11 @@ router.use(express.json());
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// ✅ يدعم أكثر من cart_id
+//  يدعم أكثر من cart_id
 router.post("/", async (req, res) => {
   try {
     const { cart_ids, method, transaction_id } = req.body;
-    console.log("📥 Incoming addPayment:", { cart_ids, method, transaction_id });
+    console.log(" Incoming addPayment:", { cart_ids, method, transaction_id });
 
     if (!cart_ids || !Array.isArray(cart_ids) || cart_ids.length === 0) {
       return res.status(400).json({ error: "cart_ids array is required" });
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
       );
 
       if (existingPayment.rows.length > 0) {
-        console.warn("⚠️ Payment already exists for cart:", cart_id);
+        console.warn(" Payment already exists for cart:", cart_id);
         payments.push(existingPayment.rows[0]);
         continue; // تخطى هذا الكارت
       }
@@ -70,10 +70,10 @@ router.post("/", async (req, res) => {
         ]
       );
 
-      console.log("✅ Payment inserted:", result.rows[0]);
+      console.log(" Payment inserted:", result.rows[0]);
       payments.push(result.rows[0]);
 
-      // 🗑️ حذف الكارت من cart
+      //  حذف الكارت من cart
       await pool.query(`DELETE FROM cart WHERE cart_id = $1`, [cart_id]);
       console.log("🗑️ Cart deleted:", cart_id);
     }
