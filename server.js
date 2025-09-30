@@ -1,7 +1,7 @@
 require("dotenv").config();
 const pg = require("pg");
 const cors = require("cors");
-
+// const io = require("./routes/socket/socket.js");
 const axios = require("axios");
 
 const express = require("express");
@@ -12,10 +12,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT;
 // const storage = multer.diskStorage({
@@ -29,7 +30,16 @@ const port = process.env.PORT;
 // const upload = multer({ storage });
 // app.use("/uploads", express.static("uploads"));
 
+const sendMessagesRoute=require("./routes/socket/RouteSocket.js")
+app.use("/api",sendMessagesRoute)
+const Ess=require("./routes/ai/descAiRes.js")
+app.use("/api",Ess)
+
+const getMessages=require("./routes/socket/GetMessages.js")
+app.use("/api",getMessages)
+
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
 //hussam
 const reviews = require("./routes/InfoCardDetails/ReviewsProduct");
 app.use("/api", reviews);
@@ -51,18 +61,34 @@ app.use("/api/user", updateUserProfile);
 const getProviderProfile = require("./routes/providerProfile/getProviderProfile.js");
 app.use("/api/provider", getProviderProfile);
 
-const updateProviderProfile = require("./routes/providerProfile/updateProviderProfile.js");
-app.use("/api/provider", updateProviderProfile);
 
-const updateProductByUserId = require("./routes/providerProfile/getProductsByuserId.js");
-app.use("/api/provider", updateProductByUserId);
+// const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
+// app.use('/api/provider', getProviderProfile);
 
-const getProducts = require("./routes/providerProfile/getProducts.js");
-app.use("/api/provider", getProducts);
+const updateProviderProfile = require('./routes/providerProfile/updateProviderProfile.js');
+app.use('/api/provider', updateProviderProfile);
+
+const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
+app.use('/api/provider', updateProductByUserId);
+
+const getProducts = require('./routes/providerProfile/getProducts.js');
+app.use('/api/provider', getProducts);
+
+// const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
+// app.use('/api/provider', getProviderReviews);
+
+const deleteProduct = require('./routes/providerProfile/hideProduct.js');
+app.use('/api/provider', deleteProduct);
+
+// const updateProduct = require('./routes/providerProfile/updateProduct.js');
+// app.use('/api/provider', updateProduct);
+
 
 //Omar
 //g
 
+const ai = require("./routes/ai/ai");
+app.use("/", ai);
 const postItem = require("./routes/orderRequest/postItem");
 app.use("/", postItem);
 const getAllCategory = require("./routes/orderRequest/getAllCategory");
@@ -85,9 +111,23 @@ app.use("/", updateStatusOrderRejected);
 const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
 app.use("/", updateStatusOrderOn_progress);
 
+const moveApprovedCartToOrders = require("./routes/cart/moveApprovedCartToOrders");
+app.use("/", moveApprovedCartToOrders);
+
+const deleteCart = require("./routes/cart/deleteCart");
+app.use("/", deleteCart);
+
 const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
 app.use("/", customerWriteReviewOfProdactOrder);
 
+const updateTheCustomReqAndToOrder = require("./routes/cart/updateTheCustomReqAndToOrder");
+app.use("/", updateTheCustomReqAndToOrder);
+
+const changeStatusPayOfProdactAfterApprove = require("./routes/cart/changeStatusPayOfProdactAfterApprove");
+app.use("/", changeStatusPayOfProdactAfterApprove);
+
+const changeStatusPayOfProdactAfterRejected = require("./routes/cart/changeStatusPayOfProdactAfterRejected");
+app.use("/", changeStatusPayOfProdactAfterRejected);
 const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
 app.use("/", getAllOrderInCustomer);
 
@@ -100,7 +140,6 @@ app.use("/api/provider", hideProduct);
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
 
-
 const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
 const verifyOtpRoute = require("./routes/forgetpassword/verify_otp");
@@ -108,6 +147,7 @@ const resetPasswordRoute = require("./routes/forgetpassword/reset_password");
 const loginRoute = require("./routes/login/login");
 const logoutRoute = require("./routes/login/logout");
 const wishlistRoute = require("./routes/wishlist/getAll");
+const topOrderedRoutes = require("./routes/TopOrders/topOrdered");
 
 app.use("/api", registerRoute);
 app.use("/api", forgotRoute);
@@ -116,34 +156,7 @@ app.use("/api", resetPasswordRoute);
 app.use("/api", loginRoute);
 app.use("/api", logoutRoute);
 app.use("/api", wishlistRoute);
-
-
-
-
-/////  استدعاء باقي الـ routes
-const moveApprovedCartToOrders = require("./routes/cart/moveApprovedCartToOrders");
-
-const changeStatusPayOfProdactAfterApprove = require("./routes/cart/changeStatusPayOfProdactAfterApprove");
-const changeStatusPayOfProdactAfterRejected = require("./routes/cart/changeStatusPayOfProdactAfterRejected");
-const deleteCart = require("./routes/cart/deleteCart");
-const updateTheCustomReqAndToOrder = require("./routes/cart/updateTheCustomReqAndToOrder");
-
-
-
-const changeStatusPay = require("./routes/cart/changeStatusPay");
-app.use("/api/carts", changeStatusPay);
-
-
-
-
-app.use("/api/carts", changeStatusPayOfProdactAfterApprove);
-app.use("/api/carts", changeStatusPayOfProdactAfterRejected);
-app.use("/api/carts", deleteCart);
-app.use("/api/carts", updateTheCustomReqAndToOrder);
-app.use("/api/carts", moveApprovedCartToOrders);
-
-
-
+app.use("/api", topOrderedRoutes);
 const addReview = require("./routes/providerProfile/addProviderReview.js");
 app.use("/api/provider", addReview);
 

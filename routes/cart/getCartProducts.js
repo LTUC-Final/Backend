@@ -7,9 +7,9 @@ const router = express.Router();
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 // GET /api/carts/products?user_id=1
-router.get("/", async (req, res) => {
+router.get("/:user_id", async (req, res) => {
   try {
-    const { user_id } = req.query;
+    const { user_id } = req.params;
     if (!user_id) return res.status(400).json({ error: "user_id is required" });
 
     const result = await pool.query(
@@ -18,6 +18,8 @@ router.get("/", async (req, res) => {
          c.customer_id,
          c.provider_id,
          c.product_id,
+         c.sendedtoprovider,
+         c.provider_response,
          p.name AS product_name,p.image AS product_image,
          c.quantity,
          c.details_order_user,
