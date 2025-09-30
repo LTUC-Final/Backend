@@ -169,20 +169,11 @@ app.use("/api/carts/item", removeFromCart);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Payments routes
 // Payments routes
+// Payments routes
 const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
 const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
 const addPayment = require("./routes/payments/addPayment");
 const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
-
-// Clear cart
-
-//app.use- payments
-app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
-app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
-app.use("/api/payments", addPayment);
-app.use("/api/payments", updatePaymentStatus);
-
-//  Routers
 const stripeCheckout = require("./routes/payments/stripeCheckout");
 const getStripeSession = require("./routes/payments/getStripeSession");
 

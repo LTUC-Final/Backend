@@ -1,5 +1,4 @@
 // routes/payments/getPaymentsSummary.js
-// routes/payments/getPaymentsSummary.js
 const express = require("express");
 const pg = require("pg");
 require("dotenv").config();

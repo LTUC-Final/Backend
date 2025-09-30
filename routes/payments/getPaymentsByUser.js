@@ -1,5 +1,4 @@
 // routes/payments/getPaymentsByUser.js
-// routes/payments/getPaymentsByUser.js
 const express = require("express");
 const pg = require("pg");
 require("dotenv").config();
@@ -7,9 +6,7 @@ require("dotenv").config();
 const router = express.Router();
 router.use(express.json());
 
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 // ✅ Get all payments for a specific customer
 router.get("/user/:customerId", async (req, res) => {
@@ -27,14 +24,9 @@ router.get("/user/:customerId", async (req, res) => {
         p.status,
         p.transaction_id,
         p.transaction_date,
-        p.cart_id,
-        p.order_id,
 
-        -- Final price: من products أو orders أو amount
-        COALESCE(pr.price, o.original_price, p.amount) AS final_price,
-
-        -- Product name
-        pr.name AS product_name,
+        -- ✅ المنتجات كلها المرتبطة بالدفع (string_agg)
+        string_agg(DISTINCT pr.name, ', ') AS product_names,
 
         -- Customer info
         u.firstname AS customer_firstname,
@@ -61,7 +53,11 @@ router.get("/user/:customerId", async (req, res) => {
       params.push(status);
     }
 
-    query += " ORDER BY p.transaction_date DESC";
+    query += `
+      GROUP BY p.payment_id, p.amount, p.method, p.status, p.transaction_id, 
+               p.transaction_date, u.firstname, u.lastname, up.firstname, up.lastname
+      ORDER BY p.transaction_date DESC
+    `;
 
     const result = await pool.query(query, params);
 

@@ -16,7 +16,9 @@ router.post("/create-checkout-session", async (req, res) => {
       return res.status(400).json({ error: "cart_ids are required" });
     }
 
-    // جلب بيانات كل الكروت
+    console.log("🛒 cart_ids sent to Stripe:", cart_ids);
+
+    // جلب بيانات الكروت
     const cartResult = await pool.query(
       `SELECT c.*, p.name, p.price, u.email 
        FROM cart c
@@ -46,8 +48,8 @@ router.post("/create-checkout-session", async (req, res) => {
       payment_method_types: ["card"],
       mode: "payment",
       line_items,
-      customer_email: carts[0].email, // أول إيميل من العميل
-      metadata: { cart_ids: JSON.stringify(cart_ids) }, // نخزن الكروت
+      customer_email: carts[0].email, 
+      metadata: { cart_ids: JSON.stringify(cart_ids) }, // 👈 نخزن كل الكارتات
       success_url: "http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "http://localhost:5173/cancel",
     });
