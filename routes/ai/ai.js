@@ -9,10 +9,6 @@ router.use(express.json());
 const OpenAI = require("openai");
 const OPEN_AI_KEY = process.env.OPEN_AI_KEY;
 
-async function getDataFromDB() {
-  const result = await pool.query("SELECT status, amount FROM orders");
-  return result.rows;
-}
 
 router.post("/ai", async (req, res) => {
   console.log("aiiiiiiiiiiiiiiiiiiiiiii");
@@ -47,9 +43,7 @@ router.post("/ai2", async (req, res) => {
       apiKey: OPEN_AI_KEY,
     });
     const formattedInput = `
-      حلل هذه البيانات وأعطني مجموع كل حالة (status) وعددها:
       ${JSON.stringify(input, null, 2)}
-      رجاءً أعد النتائج في JSON مثل:
       {
         "pending": { "count": 3, "total": 120 },
         "completed": { "count": 5, "total": 250 }
