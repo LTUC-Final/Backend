@@ -3,7 +3,6 @@ const pg = require("pg");
 const express = require("express");
 const route = express.Router();
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-
 route.post("/api/product/reaction", async (req, res) => {
   const { userId, type, product_id } = req.body;
 
@@ -13,17 +12,20 @@ route.post("/api/product/reaction", async (req, res) => {
       [product_id]
     );
 
-    let reactions = rows[0].reactions || {};
-
-    for (const key in reactions) {
-      reactions[key] = reactions[key].filter((id) => id !== userId);
-    }
-
+    let reactions = rows[0]?.reactions || {};
     let selectedReaction = null;
-    if (!reactions[type] || !reactions[type].includes(userId)) {
+    let removed = false;
+
+    if (reactions[type]?.includes(userId)) {
+      reactions[type] = reactions[type].filter((id) => id !== userId);
+      removed = true; 
+    } else {
+      for (const key in reactions) {
+        reactions[key] = reactions[key].filter((id) => id !== userId);
+      }
       if (!reactions[type]) reactions[type] = [];
       reactions[type].push(userId);
-      selectedReaction = type; 
+      selectedReaction = type;
     }
 
     const updated = await pool.query(
@@ -31,6 +33,7 @@ route.post("/api/product/reaction", async (req, res) => {
       [reactions, product_id]
     );
 
+  
     const reactionCounts = {};
     for (const key in reactions) {
       reactionCounts[key] = reactions[key].length;
@@ -42,7 +45,7 @@ route.post("/api/product/reaction", async (req, res) => {
     res.json({
       reactions: updated.rows[0].reactions,
       reactionCounts,
-      selectedReaction,
+      selectedReaction: removed ? null : selectedReaction, // إذا مسح -> null
     });
   } catch (err) {
     console.error(err);
