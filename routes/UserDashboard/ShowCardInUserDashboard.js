@@ -38,6 +38,7 @@ route.get("/ShowCardInUserDashboard/:user_id", async (req, res) => {
     if (cardResult.rows.length === 0) {
       return res.status(404).json({ error: "No products found" });
     }
+    const LenghtCards= cardResult.lenght;
     const cardsWithReaction = cardResult.rows.map((card) => {
       const reactions = card.reactions || {};
       let selectedReaction = null;
@@ -55,7 +56,7 @@ route.get("/ShowCardInUserDashboard/:user_id", async (req, res) => {
       };
     });
 
-    
+
     res.json(cardsWithReaction);
   } catch (error) {
     console.error("Error fetching products:", error.message);
