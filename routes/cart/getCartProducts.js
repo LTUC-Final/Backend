@@ -6,7 +6,6 @@ require("dotenv").config();
 const router = express.Router();
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-// GET /api/carts/products?user_id=1
 router.get("/:user_id", async (req, res) => {
   try {
     const { user_id } = req.params;
