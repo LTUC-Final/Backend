@@ -12,7 +12,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.use(express.json());
 
 app.use("/uploads", express.static("uploads"));
@@ -30,13 +29,13 @@ const port = process.env.PORT;
 // const upload = multer({ storage });
 // app.use("/uploads", express.static("uploads"));
 
-const sendMessagesRoute=require("./routes/socket/RouteSocket.js")
-app.use("/api",sendMessagesRoute)
-const Ess=require("./routes/ai/descAiRes.js")
-app.use("/api",Ess)
+const sendMessagesRoute = require("./routes/socket/RouteSocket.js");
+app.use("/api", sendMessagesRoute);
+const Ess = require("./routes/ai/descAiRes.js");
+app.use("/api", Ess);
 
-const getMessages=require("./routes/socket/GetMessages.js")
-app.use("/api",getMessages)
+const getMessages = require("./routes/socket/GetMessages.js");
+app.use("/api", getMessages);
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -61,34 +60,34 @@ app.use("/api/user", updateUserProfile);
 const getProviderProfile = require("./routes/providerProfile/getProviderProfile.js");
 app.use("/api/provider", getProviderProfile);
 
-
 // const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
 // app.use('/api/provider', getProviderProfile);
 
-const updateProviderProfile = require('./routes/providerProfile/updateProviderProfile.js');
-app.use('/api/provider', updateProviderProfile);
+const updateProviderProfile = require("./routes/providerProfile/updateProviderProfile.js");
+app.use("/api/provider", updateProviderProfile);
 
-const updateProductByUserId = require('./routes/providerProfile/getProductsByuserId.js');
-app.use('/api/provider', updateProductByUserId);
+const updateProductByUserId = require("./routes/providerProfile/getProductsByuserId.js");
+app.use("/api/provider", updateProductByUserId);
 
-const getProducts = require('./routes/providerProfile/getProducts.js');
-app.use('/api/provider', getProducts);
+const getProducts = require("./routes/providerProfile/getProducts.js");
+app.use("/api/provider", getProducts);
 
 // const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
 // app.use('/api/provider', getProviderReviews);
 
-const deleteProduct = require('./routes/providerProfile/hideProduct.js');
-app.use('/api/provider', deleteProduct);
+const deleteProduct = require("./routes/providerProfile/hideProduct.js");
+app.use("/api/provider", deleteProduct);
 
 // const updateProduct = require('./routes/providerProfile/updateProduct.js');
 // app.use('/api/provider', updateProduct);
-
 
 //Omar
 //g
 
 const ai = require("./routes/ai/ai");
 app.use("/", ai);
+const reactionPost = require("./routes/UserDashboard/reactionPost.js");
+app.use("/", reactionPost);
 const postItem = require("./routes/orderRequest/postItem");
 app.use("/", postItem);
 const getAllCategory = require("./routes/orderRequest/getAllCategory");
@@ -159,7 +158,6 @@ app.use("/api", wishlistRoute);
 app.use("/api", topOrderedRoutes);
 const addReview = require("./routes/providerProfile/addProviderReview.js");
 app.use("/api/provider", addReview);
-
 
 const getCartProducts = require("./routes/cart/getCartProducts");
 const getCartSummary = require("./routes/cart/getCartSummary");
