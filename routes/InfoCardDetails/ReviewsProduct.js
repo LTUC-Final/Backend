@@ -18,7 +18,8 @@ route.get("/ReviewsProduct/:id", async (req, res) => {
         r.created_at,
         u.role,
         u.user_id AS customer_id,
-        u.firstname AS customer_name,
+        u.firstname AS customer_name,        u.lastname AS CustomerLastName,
+
         u.profile_image AS customer_profile_image 
       FROM reviews r
       JOIN users u ON r.customer_id = u.user_id WHERE r.product_id=$1
