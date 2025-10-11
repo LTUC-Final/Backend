@@ -6,7 +6,6 @@ function sendSMS(to, body) {
   const from = process.env.TWILIO_FROM || "";
 
   if (!sid || !token || !from) {
-    console.log(`SMS MOCK → ${to}: ${body}`);
     return Promise.resolve({ mock: true });
   }
 
