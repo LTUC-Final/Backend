@@ -42,8 +42,7 @@ router.get("/:user_id", async (req, res) => {
     );
     const lenghtCard = result.rows.length;
 
-
-    res.status(200).json({cards:result.rows , length : lenghtCard});
+    res.status(200).json({ cards: result.rows, length: lenghtCard });
   } catch (err) {
     console.error("❌ Error fetching cart products:", err);
     res.status(500).json({ error: "Server error" });
