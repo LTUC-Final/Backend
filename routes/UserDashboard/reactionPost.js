@@ -18,7 +18,7 @@ route.post("/api/product/reaction", async (req, res) => {
 
     if (reactions[type]?.includes(userId)) {
       reactions[type] = reactions[type].filter((id) => id !== userId);
-      removed = true; 
+      removed = true;
     } else {
       for (const key in reactions) {
         reactions[key] = reactions[key].filter((id) => id !== userId);
@@ -33,7 +33,6 @@ route.post("/api/product/reaction", async (req, res) => {
       [reactions, product_id]
     );
 
-  
     const reactionCounts = {};
     for (const key in reactions) {
       reactionCounts[key] = reactions[key].length;
