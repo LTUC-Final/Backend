@@ -20,7 +20,7 @@ route.post("/AddCart", async (req, res) => {
             )
         }
 
-        return res.send("card added")
+        return res.send("Product added to cart")
     } catch (error) {
         console.error(
             "Error fetching  quiry  in getAllOrderProvider router:",
