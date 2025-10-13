@@ -11,7 +11,7 @@ route.post("/addfav", async (req, res) => {
 
         if (check.rows.length > 0) {
             await pool.query("DELETE FROM wishlist WHERE product_id=$1 AND customer_id=$2", [product_id, customer_id])
-            return res.send("Product deleted from cart")
+            return res.send("Product deleted from favourites")
         } else {
             await pool.query(`INSERT INTO wishlist (customer_id, product_id) 
          VALUES ($1, $2)`,
@@ -19,7 +19,7 @@ route.post("/addfav", async (req, res) => {
             )
         }
 
-        return res.send("card added")
+        return res.send("Product added to favourites")
     } catch (error) {
         console.error(
             "Error fetching  quiry  in getAllOrderProvider router:",
