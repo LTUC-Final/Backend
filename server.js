@@ -50,6 +50,8 @@ const cart = require("./routes/UserDashboard/AddCart");
 app.use("/api", cart);
 const favPage = require("./routes/UserDashboard/AddFav");
 app.use("/api", favPage);
+const msg=require("./routes/MessagesSlice/MessagesSlice.js")
+app.use("/api",msg)
 // jawhara
 const getUserProfile = require("./routes/customerProfile/getUserProfile.js");
 app.use("/api/user", getUserProfile);
