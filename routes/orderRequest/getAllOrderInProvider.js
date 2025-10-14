@@ -48,7 +48,24 @@ pr.product_id,
        `,
       [provider_id]
     );
-    res.json(response.rows);
+
+    const result1 = await pool.query(
+      `
+
+SELECT COUNT(*) 
+FROM orders 
+WHERE status IN ('pending', 'on_progress') and provider_id=$1 ;`,
+      [provider_id]
+    );
+    const count = result1.rows[0].count;
+    console.log(count);
+
+    res.json({
+      orders: response.rows,
+      ordersCount: Number(count),
+    });
+
+    // res.json(response.rows);
   } catch (error) {
     console.error(
       "Error fetching  quiry  in getAllOrderProvider router:",
