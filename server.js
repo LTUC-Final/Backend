@@ -50,8 +50,8 @@ const cart = require("./routes/UserDashboard/AddCart");
 app.use("/api", cart);
 const favPage = require("./routes/UserDashboard/AddFav");
 app.use("/api", favPage);
-const msg=require("./routes/MessagesSlice/MessagesSlice.js")
-app.use("/api",msg)
+const msg = require("./routes/MessagesSlice/MessagesSlice.js");
+app.use("/api", msg);
 // jawhara
 const getUserProfile = require("./routes/customerProfile/getUserProfile.js");
 app.use("/api/user", getUserProfile);
@@ -117,6 +117,9 @@ app.use("/", moveApprovedCartToOrders);
 
 const deleteCart = require("./routes/cart/deleteCart");
 app.use("/", deleteCart);
+
+const reactions = require("./routes/reaction/reactions.js");
+app.use("/", reactions);
 
 const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
 app.use("/", customerWriteReviewOfProdactOrder);
