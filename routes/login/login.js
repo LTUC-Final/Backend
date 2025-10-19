@@ -14,7 +14,7 @@ const allowedEmailDomains = new Set([
   "outlook.com",
   "hotmail.com",
   "live.com",
-  "icloud.com"
+  "icloud.com",
 ]);
 
 function isValidEmailSyntax(email) {
@@ -30,13 +30,18 @@ function isAllowedEmailDomain(email) {
 router.post("/login", async (req, res) => {
   try {
     const body = req.body || {};
-    const rawEmail = String(body.email || "").trim().toLowerCase();
+    const rawEmail = String(body.email || "")
+      .trim()
+      .toLowerCase();
     const password = String(body.password || "");
 
     const fields = {};
     if (!rawEmail) fields.email = "Email is required.";
     if (!password) fields.password = "Password is required.";
-    if (rawEmail && (!isValidEmailSyntax(rawEmail) || !isAllowedEmailDomain(rawEmail))) {
+    if (
+      rawEmail &&
+      (!isValidEmailSyntax(rawEmail) || !isAllowedEmailDomain(rawEmail))
+    ) {
       fields.email = "Valid email required (Gmail/Yahoo/Outlook…).";
     }
     if (Object.keys(fields).length > 0) {
@@ -74,7 +79,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { user_id: user.user_id, role: user.role, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: 1000000 }
     );
 
     const safeUser = {
@@ -85,16 +90,18 @@ router.post("/login", async (req, res) => {
       role: user.role,
       phone: user.phone,
       profile_image: user.profile_image,
-      provider: providerInfo
+      provider: providerInfo,
     };
 
     return res.json({
       message: "Login successful",
       token,
-      user: safeUser
+      user: safeUser,
     });
   } catch (error) {
-    return res.status(500).json({ error: "Something went wrong while logging in." });
+    return res
+      .status(500)
+      .json({ error: "Something went wrong while logging in." });
   }
 });
 
