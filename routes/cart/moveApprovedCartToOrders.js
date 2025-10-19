@@ -55,7 +55,7 @@ router.post("/moveApprovedCartToOrders/:user_id", async (req, res) => {
       [user_id]
     );
 
-    res.json({ ordersCreated: ordersInserted });
+    res.json({ ordersCreated: ordersInserted, length: cartItems.rows.length });
   } catch (err) {
     console.error("Error in moveApprovedCartToOrders:", err.message);
     res
