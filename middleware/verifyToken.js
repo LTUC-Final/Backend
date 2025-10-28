@@ -7,7 +7,7 @@ function routeGuard2(req, res, next) {
   const tokenFromQuery = req.query.token;
   const token = tokenFromHeader || tokenFromQuery;
 
-  console.log("dddddddddddddddddddddddddddddddddddd" + token);
+  // console.log("dddddddddddddddddddddddddddddddddddd" + token);
   if (!token) {
     return res.status(401).json({ message: "the token not exist " });
   }
