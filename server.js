@@ -9,8 +9,10 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
+
 app.use(cors());
-app.use(express.json());
+// const webhook = require("./routes/payments/webhook");
+// app.use("/api/payments", webhook);
 
 app.use(express.json());
 
@@ -192,11 +194,23 @@ app.use("/api/payments", addPayment);
 app.use("/api/payments", updatePaymentStatus);
 
 //  Routers
-const stripeCheckout = require("./routes/payments/stripeCheckout");
 const getStripeSession = require("./routes/payments/getStripeSession");
 
 //  استخدم المسارات
+//////////////////////////
+const stripeCheckout = require("./routes/payments/stripeCheckout");
+
 app.use("/api/payments", stripeCheckout);
+//////////////////////////
+const savePayment = require("./routes/payments/savePayment");
+
+app.use("/", savePayment);
+const getPaymentsHistory = require("./routes/payments/getPaymentsHistory");
+app.use("/", getPaymentsHistory);
+const getProviderPayments = require("./routes/payments/getProviderPayments");
+app.use("/", getProviderPayments);
+
+///////////
 app.use("/api/payments", getStripeSession);
 
 app.use((req, res) => {

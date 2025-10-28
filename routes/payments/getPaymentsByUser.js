@@ -8,9 +8,7 @@ router.use(express.json());
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-});
-
-// Get all payments for a specific customer with optional status filter
+})// Get all payments for a specific customer with optional status filter
 router.get("/:customerId", async (req, res) => {
   try {
     const { customerId } = req.params;
@@ -57,4 +55,4 @@ router.get("/:customerId", async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
