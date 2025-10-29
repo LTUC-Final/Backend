@@ -9,8 +9,10 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
+
 app.use(cors());
-app.use(express.json());
+// const webhook = require("./routes/payments/webhook");
+// app.use("/api/payments", webhook);
 
 app.use(express.json());
 
@@ -170,11 +172,11 @@ const incrementQuantity = require("./routes/cart/incrementQuantity");
 const decrementQuantity = require("./routes/cart/decrementQuantity");
 const removeFromCart = require("./routes/cart/removeFromCart");
 
-// Payments routes
-const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
-const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
-const addPayment = require("./routes/payments/addPayment");
-const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+// // Payments routes
+// const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
+// const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
+// const addPayment = require("./routes/payments/addPayment");
+// const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
 
 //app.use- carts
 app.use("/api/carts/products", getCartProducts); // Get cart products by user_id
@@ -186,17 +188,29 @@ app.use("/api/carts/item", removeFromCart);
 // Clear cart
 
 //app.use- payments
-app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
-app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
-app.use("/api/payments", addPayment);
-app.use("/api/payments", updatePaymentStatus);
+// app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
+// app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
+// app.use("/api/payments", addPayment);
+// app.use("/api/payments", updatePaymentStatus);
 
 //  Routers
-const stripeCheckout = require("./routes/payments/stripeCheckout");
 const getStripeSession = require("./routes/payments/getStripeSession");
 
 //  استخدم المسارات
+//////////////////////////
+const stripeCheckout = require("./routes/payments/stripeCheckout");
+
 app.use("/api/payments", stripeCheckout);
+//////////////////////////
+const savePayment = require("./routes/payments/savePayment");
+
+app.use("/", savePayment);
+const getPaymentsHistory = require("./routes/payments/getPaymentsHistory");
+app.use("/", getPaymentsHistory);
+const getProviderPayments = require("./routes/payments/getProviderPayments");
+app.use("/", getProviderPayments);
+
+///////////
 app.use("/api/payments", getStripeSession);
 
 app.use((req, res) => {
