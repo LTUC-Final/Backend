@@ -13,37 +13,38 @@ router.post("/save-payment", async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(session_id, {
       expand: ["line_items"],
     });
-const paymentIntent = await stripe.paymentIntents.retrieve(
-  session.payment_intent,
-  {
-    expand: ["charges.data.payment_method_details"],
-  }
-);
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+      session.payment_intent,
+      {
+        expand: ["charges.data.payment_method_details"],
+      }
+    );
 
+    let card_brand = null;
+    let card_last4 = null;
+    let card_exp_month = null;
+    let card_exp_year = null;
 
-    
-let card_brand = null;
-let card_last4 = null;
-let card_exp_month = null;
-let card_exp_year = null;
+    if (
+      paymentIntent.charges &&
+      paymentIntent.charges.data &&
+      paymentIntent.charges.data.length > 0
+    ) {
+      const charge = paymentIntent.charges.data[0];
+      const cardInfo = charge.payment_method_details?.card;
 
-if (
-  paymentIntent.charges &&
-  paymentIntent.charges.data &&
-  paymentIntent.charges.data.length > 0
-) {
-  const charge = paymentIntent.charges.data[0];
-  const cardInfo = charge.payment_method_details?.card;
-
-  if (cardInfo) {
-    card_brand = cardInfo.brand;
-    card_last4 = cardInfo.last4;
-    card_exp_month = cardInfo.exp_month;
-    card_exp_year = cardInfo.exp_year;
-  }
-} else {
-  console.warn("⚠️ No charge data found for this PaymentIntent:", session.id);
-}
+      if (cardInfo) {
+        card_brand = cardInfo.brand;
+        card_last4 = cardInfo.last4;
+        card_exp_month = cardInfo.exp_month;
+        card_exp_year = cardInfo.exp_year;
+      }
+    } else {
+      console.warn(
+        "⚠️ No charge data found for this PaymentIntent:",
+        session.id
+      );
+    }
 
     console.log(
       "💳 Card info:",
