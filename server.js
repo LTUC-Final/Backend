@@ -172,11 +172,11 @@ const incrementQuantity = require("./routes/cart/incrementQuantity");
 const decrementQuantity = require("./routes/cart/decrementQuantity");
 const removeFromCart = require("./routes/cart/removeFromCart");
 
-// Payments routes
-const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
-const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
-const addPayment = require("./routes/payments/addPayment");
-const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+// // Payments routes
+// const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
+// const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
+// const addPayment = require("./routes/payments/addPayment");
+// const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
 
 //app.use- carts
 app.use("/api/carts/products", getCartProducts); // Get cart products by user_id
@@ -188,10 +188,10 @@ app.use("/api/carts/item", removeFromCart);
 // Clear cart
 
 //app.use- payments
-app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
-app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
-app.use("/api/payments", addPayment);
-app.use("/api/payments", updatePaymentStatus);
+// app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
+// app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
+// app.use("/api/payments", addPayment);
+// app.use("/api/payments", updatePaymentStatus);
 
 //  Routers
 const getStripeSession = require("./routes/payments/getStripeSession");
