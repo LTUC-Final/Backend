@@ -58,7 +58,7 @@ pr.product_id,
 
 SELECT COUNT(*) 
 FROM orders 
-WHERE status IN ('pending', 'on_progress') and provider_id=$1 ;`,
+WHERE status IN ('pending', 'on_progress','awaiting_approval') and provider_id=$1 ;`,
         [provider_id]
       );
       const count = result1.rows[0].count;

@@ -12,9 +12,21 @@ router.delete("/deleteCard/:cart_id", async (req, res) => {
   try {
     const { cart_id } = req.params;
 
-    await pool.query(
-      `DELETE FROM cart 
-       WHERE cart_id = $1`,
+    const status = "rejected";
+    console.log(cart_id);
+
+    const result1 = await pool.query(
+      `UPDATE orders
+       SET status = $1
+       WHERE cart_id = $2
+       RETURNING *;`,
+      [status, cart_id]
+    );
+
+    const result = await pool.query(
+      `DELETE FROM cart
+       WHERE cart_id = $1
+       RETURNING *;`,
       [cart_id]
     );
 
@@ -23,4 +35,5 @@ router.delete("/deleteCard/:cart_id", async (req, res) => {
     console.error("Error in customer reject:", err.message);
     res.status(500).json({ message: "Error rejecting custom requirement" });
   }
-});module.exports = router;
+});
+module.exports = router;
