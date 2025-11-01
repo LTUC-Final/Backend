@@ -15,7 +15,7 @@ router.get(
   routeGuard2,
   async (req, res) => {
     const { provider_id } = req.params;
-    console.log(req.params);
+    // console.log(req.params);
     try {
       const response = await pool.query(
         `SELECT o.* ,   c.user_id   AS customer_user_id,
@@ -62,7 +62,7 @@ WHERE status IN ('pending', 'on_progress','awaiting_approval') and provider_id=$
         [provider_id]
       );
       const count = result1.rows[0].count;
-      console.log(count);
+      // console.log(count);
 
       res.json({
         orders: response.rows,

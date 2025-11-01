@@ -196,7 +196,6 @@ app.use("/api/carts/item", removeFromCart);
 //  Routers
 const getStripeSession = require("./routes/payments/getStripeSession");
 
-//  استخدم المسارات
 //////////////////////////
 const stripeCheckout = require("./routes/payments/stripeCheckout");
 
@@ -209,6 +208,12 @@ const getPaymentsHistory = require("./routes/payments/getPaymentsHistory");
 app.use("/", getPaymentsHistory);
 const getProviderPayments = require("./routes/payments/getProviderPayments");
 app.use("/", getProviderPayments);
+
+const providersStrip = require("./routes/payments/providersStrip");
+app.use("/", providersStrip);
+
+const webhook = require("./routes/payments/webhook");
+app.use("/", webhook);
 
 ///////////
 app.use("/api/payments", getStripeSession);
