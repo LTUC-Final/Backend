@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
     let providerInfo = null;
     if (user.role === "provider") {
       const { rows: providerRows } = await pool.query(
-        `SELECT provider_id, user_id, bio, skills, created_at
+        `SELECT *
          FROM providers
          WHERE user_id = $1`,
         [user.user_id]
