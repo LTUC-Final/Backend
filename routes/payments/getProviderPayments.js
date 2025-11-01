@@ -9,10 +9,10 @@ router.get("/provider/:provider_id", async (req, res) => {
   try {
     const provider_id = Number(req.params.provider_id);
 
-    console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
+    // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
 
-    console.log(provider_id);
-    console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
+    // console.log(provider_id);
+    // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
 
     const balanceRes = await pool.query(
       `SELECT total_balance FROM provider_balance WHERE provider_id = $1`,
@@ -34,10 +34,10 @@ router.get("/provider/:provider_id", async (req, res) => {
       [provider_id]
     );
 
-    console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
+    // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
 
-    console.log(paymentsRes.rows);
-    console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
+    // console.log(paymentsRes.rows);
+    // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
 
     res.json({
       total_balance: totalBalance,
