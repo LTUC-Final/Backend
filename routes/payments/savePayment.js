@@ -342,7 +342,6 @@ router.post("/save-payment", async (req, res) => {
     const lineItems = session.line_items?.data || [];
     const providerTotals = {};
 
-    // 🔹 وزّع كل منتج حسب المزوّد تبعه
     lineItems.forEach((item, idx) => {
       const map = mapping[idx];
       if (!map) return;
@@ -353,7 +352,6 @@ router.post("/save-payment", async (req, res) => {
       providerTotals[providerId] += amount;
     });
 
-    // 🔹 خزّن المدفوعات وحدث أرصدة المزودين
     for (const providerId in providerTotals) {
       const amount = providerTotals[providerId];
       await pool.query(
