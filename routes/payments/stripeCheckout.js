@@ -758,8 +758,16 @@ router.post("/create-checkout-session-all", async (req, res) => {
         .status(400)
         .json({ error: "Products array is empty or invalid" });
     }
+ const approvedProducts = products.filter(
+      (p) => p.status_pay === "Approve"
+    );
 
-    const mapping = products.map((item) => ({
+    if (!approvedProducts.length) {
+      return res
+        .status(400)
+        .json({ error: "No approved products found for checkout" });
+    }
+    const mapping = approvedProducts.map((item) => ({
       product_id: item.product_id,
       provider_id: item.provider_id,
       cart_id: item.cart_id,
@@ -768,7 +776,7 @@ router.post("/create-checkout-session-all", async (req, res) => {
 
     const encodedMapping = base64url.encode(JSON.stringify(mapping));
 
-    const lineItems = products
+    const lineItems = approvedProducts
       .map((item) => {
         const rawPrice = item.price || item.cart_price || 0;
         const priceNum = Number(
@@ -807,7 +815,7 @@ router.post("/create-checkout-session-all", async (req, res) => {
       customer_email: email,
       metadata: {
         customer_id,
-        cart_ids: products.map((p) => p.cart_id).join(","),
+        cart_ids: approvedProducts.map((p) => p.cart_id).join(","),
         mapping: encodedMapping,
       },
       success_url: `http://localhost:${portFront}/success?session_id={CHECKOUT_SESSION_ID}`,
