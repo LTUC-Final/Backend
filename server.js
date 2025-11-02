@@ -82,6 +82,9 @@ app.use("/api/provider", getProducts);
 const deleteProduct = require("./routes/providerProfile/hideProduct.js");
 app.use("/api/provider", deleteProduct);
 
+const deleteProfileImage= require("./routes/providerProfile/deleteProfileImage.js");
+app.use("/api", deleteProfileImage);
+
 // const updateProduct = require('./routes/providerProfile/updateProduct.js');
 // app.use('/api/provider', updateProduct);
 
