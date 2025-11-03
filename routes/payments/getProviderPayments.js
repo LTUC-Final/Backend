@@ -9,7 +9,7 @@ router.get("/provider/:provider_id", async (req, res) => {
   try {
     const provider_id = Number(req.params.provider_id);
 
-    console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
+    // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
 
     // console.log(provider_id);
     // console.log("sssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaa");
