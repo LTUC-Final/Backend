@@ -21,8 +21,11 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+<<<<<<< HEAD
     "firebase": "^12.5.0",
     "firebase-admin": "^13.5.0",
+=======
+>>>>>>> eabcf4c65269cc273384cf063c818425ca463c2b
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.12.17",
     "multer": "^2.0.2",
