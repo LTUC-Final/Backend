@@ -1,0 +1,258 @@
+require("dotenv").config();
+const pg = require("pg");
+const cors = require("cors");
+// const io = require("./routes/socket/socket.js");
+const axios = require("axios");
+
+const express = require("express");
+
+const path = require("path");
+
+const app = express();
+
+app.use(cors());
+// const webhook = require("./routes/payments/webhook");
+// app.use("/api/payments", webhook);
+
+app.use(express.json());
+
+// app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+const port = process.env.PORT;
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/"); // المجلد
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + path.extname(file.originalname)); // اسم فريد
+//   },
+// });
+// const upload = multer({ storage });
+// app.use("/uploads", express.static("uploads"));
+
+const sendMessagesRoute = require("./routes/socket/RouteSocket.js");
+app.use("/api", sendMessagesRoute);
+const Ess = require("./routes/ai/descAiRes.js");
+app.use("/api", Ess);
+
+const getMessages = require("./routes/socket/GetMessages.js");
+app.use("/api", getMessages);
+
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+//hussam
+const reviews = require("./routes/InfoCardDetails/ReviewsProduct");
+app.use("/api", reviews);
+const card = require("./routes/UserDashboard/ShowCardInUserDashboard");
+app.use("/api", card);
+const cardPage = require("./routes/InfoCardDetails/DetailsOfCardInfo");
+app.use("/api", cardPage);
+const cart = require("./routes/UserDashboard/AddCart");
+app.use("/api", cart);
+const favPage = require("./routes/UserDashboard/AddFav");
+app.use("/api", favPage);
+const msg = require("./routes/MessagesSlice/MessagesSlice.js");
+app.use("/api", msg);
+// jawhara
+const getUserProfile = require("./routes/customerProfile/getUserProfile.js");
+app.use("/api/user", getUserProfile);
+
+const updateUserProfile = require("./routes/customerProfile/updateUserProfile.js");
+app.use("/api/user", updateUserProfile);
+
+const getProviderProfile = require("./routes/providerProfile/getProviderProfile.js");
+app.use("/api/provider", getProviderProfile);
+
+// const getProviderProfile = require('./routes/providerProfile/getProviderProfile.js');
+// app.use('/api/provider', getProviderProfile);
+
+const updateProviderProfile = require("./routes/providerProfile/updateProviderProfile.js");
+app.use("/api/provider", updateProviderProfile);
+
+const updateProductByUserId = require("./routes/providerProfile/getProductsByuserId.js");
+app.use("/api/provider", updateProductByUserId);
+
+const getProducts = require("./routes/providerProfile/getProducts.js");
+app.use("/api/provider", getProducts);
+
+// const getProviderReviews = require('./routes/providerProfile/getProviderReviews.js');
+// app.use('/api/provider', getProviderReviews);
+
+const deleteProduct = require("./routes/providerProfile/hideProduct.js");
+app.use("/api/provider", deleteProduct);
+
+const deleteProfileImage= require("./routes/providerProfile/deleteProfileImage.js");
+app.use("/api", deleteProfileImage);
+
+// const updateProduct = require('./routes/providerProfile/updateProduct.js');
+// app.use('/api/provider', updateProduct);
+
+//Omar
+//g
+
+const ai = require("./routes/ai/ai");
+app.use("/", ai);
+const reactionPost = require("./routes/UserDashboard/reactionPost.js");
+app.use("/", reactionPost);
+const postItem = require("./routes/orderRequest/postItem");
+app.use("/", postItem);
+const getAllCategory = require("./routes/orderRequest/getAllCategory");
+app.use("/", getAllCategory);
+const getAllOrderProvider = require("./routes/orderRequest/getAllOrderInProvider");
+app.use("/", getAllOrderProvider);
+const updatePriceOrderAndDetails = require("./routes/orderRequest/updatePriceOrderAndDetails");
+app.use("/", updatePriceOrderAndDetails);
+const updateStatusOrderCompleted = require("./routes/orderRequest/updateStatusOrderCompleted");
+app.use("/", updateStatusOrderCompleted);
+
+const sendResponseProviderToCart = require("./routes/orderRequest/sendResponseProviderToCart.js");
+app.use("/", sendResponseProviderToCart);
+
+const updateDateDelivary = require("./routes/orderRequest/updateDateDelivary.js");
+app.use("/", updateDateDelivary);
+const updateStatusOrderRejected = require("./routes/orderRequest/updateStatusOrderRejected");
+app.use("/", updateStatusOrderRejected);
+
+const updateStatusOrderOn_progress = require("./routes/orderRequest/updateStatusOrderOn_progress");
+app.use("/", updateStatusOrderOn_progress);
+
+const moveApprovedCartToOrders = require("./routes/cart/moveApprovedCartToOrders");
+app.use("/", moveApprovedCartToOrders);
+
+const deleteCart = require("./routes/cart/deleteCart");
+app.use("/", deleteCart);
+
+const reactions = require("./routes/reaction/reactions.js");
+app.use("/", reactions);
+
+const customerWriteReviewOfProdactOrder = require("./routes/orderCustomer/customerWriteReviewOfProdactOrder");
+app.use("/", customerWriteReviewOfProdactOrder);
+
+const updateTheCustomReqAndToOrder = require("./routes/cart/updateTheCustomReqAndToOrder");
+app.use("/", updateTheCustomReqAndToOrder);
+
+const changeStatusPayOfProdactAfterApprove = require("./routes/cart/changeStatusPayOfProdactAfterApprove");
+app.use("/", changeStatusPayOfProdactAfterApprove);
+
+const changeStatusPayOfProdactAfterRejected = require("./routes/cart/changeStatusPayOfProdactAfterRejected");
+app.use("/", changeStatusPayOfProdactAfterRejected);
+const getAllOrderInCustomer = require("./routes/orderCustomer/getAllOrderInCustomer");
+app.use("/", getAllOrderInCustomer);
+
+const getProviderReviews = require("./routes/providerProfile/getProviderReviews.js");
+app.use("/api/provider", getProviderReviews);
+
+const hideProduct = require("./routes/providerProfile/hideProduct.js");
+app.use("/api/provider", hideProduct);
+
+const updateProduct = require("./routes/providerProfile/updateProduct.js");
+app.use("/api/provider", updateProduct);
+
+const registerRoute = require("./routes/register/register");
+const forgotRoute = require("./routes/forgetpassword/forgot");
+const verifyOtpRoute = require("./routes/forgetpassword/verify_otp");
+const resetPasswordRoute = require("./routes/forgetpassword/reset_password");
+const loginRoute = require("./routes/login/login");
+const logoutRoute = require("./routes/login/logout");
+const wishlistRoute = require("./routes/wishlist/getAll");
+const topOrderedRoutes = require("./routes/TopOrders/topOrdered");
+
+app.use("/api", registerRoute);
+app.use("/api", forgotRoute);
+app.use("/api", verifyOtpRoute);
+app.use("/api", resetPasswordRoute);
+app.use("/api", loginRoute);
+app.use("/api", logoutRoute);
+app.use("/api", wishlistRoute);
+app.use("/api", topOrderedRoutes);
+const addReview = require("./routes/providerProfile/addProviderReview.js");
+app.use("/api/provider", addReview);
+
+const getCartProducts = require("./routes/cart/getCartProducts");
+const getCartSummary = require("./routes/cart/getCartSummary");
+const incrementQuantity = require("./routes/cart/incrementQuantity");
+const decrementQuantity = require("./routes/cart/decrementQuantity");
+const removeFromCart = require("./routes/cart/removeFromCart");
+
+// // Payments routes
+// const getPaymentsByUser = require("./routes/payments/getPaymentsByUser");
+// const getPaymentsSummary = require("./routes/payments/getPaymentsSummary");
+// const addPayment = require("./routes/payments/addPayment");
+// const updatePaymentStatus = require("./routes/payments/updatePaymentStatus");
+
+//app.use- carts
+app.use("/api/carts/products", getCartProducts); // Get cart products by user_id
+
+app.use("/api/carts/summary", getCartSummary); // Get cart summary by user_id
+app.use("/api/carts/increment", incrementQuantity);
+app.use("/api/carts/decrement", decrementQuantity);
+app.use("/api/carts/item", removeFromCart);
+// Clear cart
+
+//app.use- payments
+// app.use("/api/payments", getPaymentsByUser); // Get payments by user_id
+// app.use("/api/payments", getPaymentsSummary); // Get payments summary by user_id
+// app.use("/api/payments", addPayment);
+// app.use("/api/payments", updatePaymentStatus);
+
+//  Routers
+const getStripeSession = require("./routes/payments/getStripeSession");
+
+//////////////////////////
+const stripeCheckout = require("./routes/payments/stripeCheckout");
+
+app.use("/api/payments", stripeCheckout);
+//////////////////////////
+const savePayment = require("./routes/payments/savePayment");
+
+app.use("/", savePayment);
+const getPaymentsHistory = require("./routes/payments/getPaymentsHistory");
+app.use("/", getPaymentsHistory);
+const getProviderPayments = require("./routes/payments/getProviderPayments");
+app.use("/", getProviderPayments);
+
+const providersStrip = require("./routes/payments/providersStrip");
+app.use("/", providersStrip);
+
+const webhook = require("./routes/payments/webhook");
+app.use("/", webhook);
+
+///////////
+app.use("/api/payments", getStripeSession);
+
+app.use((req, res) => {
+  res.status(404).send("Page not fond <a href='/'>back to home </a>");
+});
+
+pool
+  .connect()
+  .then((client) => {
+    return client
+      .query("SELECT current_database(), current_user")
+      .then((res) => {
+        client.release();
+
+        const dbName = res.rows[0].current_database;
+        const dbUser = res.rows[0].current_user;
+        console.log(" Connected to DB:", res.rows[0]);
+        console.log(
+          `Connected to PostgreSQL as user '${dbUser}' on database '${dbName}'`
+        );
+        console.log(`App listening on port http://localhost:${port}`);
+      });
+  })
+  .then(() => {
+    app.listen(port, () => {
+      console.log(` Server running on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Could not connect to database:", err);
+  });
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+module.exports = { app, pool };
