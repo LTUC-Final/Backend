@@ -105,4 +105,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 ///////////////
 uploads/
+<<<<<<< HEAD
 job-tracker-b9e24-firebase-adminsdk-fbsvc-33c4e692a1.json
+=======
+>>>>>>> eabcf4c65269cc273384cf063c818425ca463c2b

@@ -1,16 +1,13 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const pg = require("pg");
+const pg = require('pg');
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
-//provider id to get all his reviews
+  //provider id to get all his reviews
 router.get("/getProviderReviews/:id", async (req, res) => {
   const { id } = req.params;
 
-  console.log("id");
-  console.log(id);
-  console.log("id");
 
   try {
     const result = await pool.query(
@@ -37,15 +34,16 @@ JOIN users c ON rp.customer_id = c.user_id
 JOIN providers p ON rp.provider_id = p.provider_id
 JOIN users u ON p.user_id = u.user_id     
 WHERE rp.provider_id = $1;`,
-      [Number(id)]
+      [id]
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: `Provider's reviews  not found` });
+      return res.status(404).json({ message: `Provider's reviews  not found`});
     }
 
     res.json(result.rows);
     console.log("Fetching reviews from DB for provider_id:", id);
+
   } catch (error) {
     console.log("error fetching Provider profile ", error);
     res.status(500).json({ message: "Server error" });
