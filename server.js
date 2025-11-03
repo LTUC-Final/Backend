@@ -16,8 +16,8 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/uploads", express.static("uploads"));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// app.use("/uploads", express.static("uploads"));
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT;
 // const storage = multer.diskStorage({

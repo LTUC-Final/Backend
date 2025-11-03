@@ -39,7 +39,7 @@ WHERE c.customer_id = $1 AND c.status_pay = 'Approve';
           product_data: {
             name: item.product_name || `Product ${item.product_id}`,
             images: item.product_image
-              ? [`http://localhost:${port}/uploads/${item.product_image}`]
+              ? [item.product_image]
               : [],
           },
           unit_amount: Math.round(Number(item.price) * 100),
@@ -247,8 +247,8 @@ router.post("/create-multi-provider-sessions", async (req, res) => {
                   item.name ||
                   `Product ${item.product_id}`,
                 images: item.image
-                  ? [`http://localhost:${portFront}/uploads/${item.image}`]
-                  : [],
+                  // ? [`http://localhost:${portFront}/uploads/${item.image}`]
+                  // : [],
               },
               unit_amount: Math.round(priceNum * 100),
             },
@@ -798,7 +798,7 @@ router.post("/create-checkout-session-all", async (req, res) => {
               name:
                 item.product_name || item.name || `Product ${item.product_id}`,
               images: item.product_image
-                ? [`http://localhost:${portFront}${item.product_image}`]
+                ? [item.product_image]
                 : [],
             },
             unit_amount: Math.round(priceNum * 100), 

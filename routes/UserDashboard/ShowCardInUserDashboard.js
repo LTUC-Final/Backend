@@ -50,8 +50,15 @@ route.get("/ShowCardInUserDashboard/:user_id", async (req, res) => {
         }
       }
 
+       let imageUrl = card.image;
+      if (imageUrl && imageUrl.startsWith("/uploads/")) {
+        const fileName = imageUrl.split("/uploads/")[1];
+        imageUrl = `https://storage.googleapis.com/job-tracker-b9e24.appspot.com/${fileName}`;
+      }
+
       return {
         ...card,
+          image: imageUrl,
         selectedReaction,
       };
     });
