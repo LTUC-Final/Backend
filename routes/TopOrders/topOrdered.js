@@ -17,7 +17,7 @@ router.get("/topordered", async (req, res) => {
       ORDER BY
         COALESCE(p.timesordered, 0) DESC,
         p.product_id ASC
-      LIMIT 4;
+      LIMIT 3;
     `;
     const { rows } = await pool.query(sql);
     res.json({ items: rows });
