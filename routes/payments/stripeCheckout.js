@@ -748,7 +748,7 @@ router.post("/create-checkout-session-all", async (req, res) => {
   try {
     const { customer_id, email, products } = req.body;
 
-    console.log("🧾 Received unified payment request");
+    console.log(" Received unified payment request");
     console.log("Customer ID:", customer_id);
     console.log("Email:", email);
     console.log("Products:", products);
