@@ -1,6 +1,11 @@
 require("dotenv").config();
 const pg = require("pg");
 const cors = require("cors");
+app.use(cors({
+  origin: "https://your-frontend.onrender.com", // change to your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 // const io = require("./routes/socket/socket.js");
 const axios = require("axios");
 
