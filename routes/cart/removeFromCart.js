@@ -6,6 +6,11 @@ const cors = require("cors");
 require("dotenv").config();
 const router = express.Router();
 router.use(cors());
+app.use(cors({
+  origin: "https://your-frontend.onrender.com", // change to your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 router.use(express.json());
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
