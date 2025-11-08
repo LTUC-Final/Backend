@@ -11,7 +11,7 @@ const path = require("path");
 
 const app = express();
 
-app.use(cors());
+
 app.use(cors({
   origin: "https://your-frontend.onrender.com", // change to your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -26,7 +26,7 @@ app.use(express.json());
 // app.use("/uploads", express.static("uploads"));
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT;
+// const port = process.env.PORT;
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, "uploads/"); // المجلد
@@ -231,27 +231,19 @@ app.use("/api/payments", getStripeSession);
 app.use((req, res) => {
   res.status(404).send("Page not fond <a href='/'>back to home </a>");
 });
+const port = process.env.PORT || 3001;
 
-pool
-  .connect()
-  .then((client) => {
-    return client
-      .query("SELECT current_database(), current_user")
-      .then((res) => {
-        client.release();
 
-        const dbName = res.rows[0].current_database;
-        const dbUser = res.rows[0].current_user;
-        console.log(" Connected to DB:", res.rows[0]);
-        console.log(
-          `Connected to PostgreSQL as user '${dbUser}' on database '${dbName}'`
-        );
-        console.log(`App listening on port http://localhost:${port}`);
-      });
-  })
-  .then(() => {
-    app.listen(port, () => {
-      console.log(` Server running on http://localhost:${port}`);
+
+pool.connect()
+  .then((client) => client.query("SELECT current_database(), current_user"))
+  .then((resDB) => {
+    const dbName = resDB.rows[0].current_database;
+    const dbUser = resDB.rows[0].current_user;
+    console.log(`Connected to PostgreSQL as '${dbUser}' on database '${dbName}'`);
+
+    app.listen(port, "0.0.0.0", () => {
+      console.log(`Server running on port ${port}`);
     });
   })
   .catch((err) => {
@@ -259,7 +251,8 @@ pool
   });
 
 process.on("unhandledRejection", (reason) => {
-  console.error("Unhandled Rejection:", reason);
+  console.error("⚠️ Unhandled Rejection:", reason);
 });
+
 
 module.exports = { app, pool };
