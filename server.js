@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://your-frontend.onrender.com", // change to your frontend domain
+  origin: "*", // change to your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
