@@ -10,7 +10,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const routeGuard2 = require("./middleware/verifyToken.js");
+// const routeGuard2 = require("./middleware/verifyToken.js");
 
 
 app.use(cors({
@@ -57,7 +57,7 @@ app.use("/api", loginRoute);
 app.use("/api", registerRoute);
 
 
-app.use(routeGuard2);
+// app.use(routeGuard2);
 
 
 //hussam
