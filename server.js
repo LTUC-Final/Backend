@@ -10,6 +10,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
+const routeGuard2 = require("./middleware/verifyToken.js");
 
 
 app.use(cors({
@@ -47,6 +48,17 @@ const getMessages = require("./routes/socket/GetMessages.js");
 app.use("/api", getMessages);
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const loginRoute = require("./routes/login/login");
+const registerRoute = require("./routes/register/register");
+
+
+app.use("/api", loginRoute);
+
+app.use("/api", registerRoute);
+
+
+app.use(routeGuard2);
+
 
 //hussam
 const reviews = require("./routes/InfoCardDetails/ReviewsProduct");
@@ -156,20 +168,18 @@ app.use("/api/provider", hideProduct);
 const updateProduct = require("./routes/providerProfile/updateProduct.js");
 app.use("/api/provider", updateProduct);
 
-const registerRoute = require("./routes/register/register");
 const forgotRoute = require("./routes/forgetpassword/forgot");
 const verifyOtpRoute = require("./routes/forgetpassword/verify_otp");
 const resetPasswordRoute = require("./routes/forgetpassword/reset_password");
-const loginRoute = require("./routes/login/login");
 const logoutRoute = require("./routes/login/logout");
 const wishlistRoute = require("./routes/wishlist/getAll");
 const topOrderedRoutes = require("./routes/TopOrders/topOrdered");
 
-app.use("/api", registerRoute);
+
 app.use("/api", forgotRoute);
 app.use("/api", verifyOtpRoute);
 app.use("/api", resetPasswordRoute);
-app.use("/api", loginRoute);
+
 app.use("/api", logoutRoute);
 app.use("/api", wishlistRoute);
 app.use("/api", topOrderedRoutes);
