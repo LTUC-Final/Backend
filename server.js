@@ -12,12 +12,12 @@ const path = require("path");
 const app = express();
 
 app.use(cors());
-
 app.use(cors({
   origin: "https://your-frontend.onrender.com", // change to your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
 // const webhook = require("./routes/payments/webhook");
 // app.use("/api/payments", webhook);
 
