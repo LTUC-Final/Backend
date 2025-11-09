@@ -41,6 +41,11 @@ router.post("/postItem", upload.single("image"), async (req, res) => {
 console.log("this is data for req postItem",req.file)
 console.log("ASdasdasd");
 
+if (!req.file) {
+  console.error("No file uploaded — req.file is undefined!");
+  return res.status(400).json({ error: "Image file is required." });
+}
+
     if (req.file) {
       const file = req.file;
       // const fileName = `${Date.now()}_${file.originalname}`;
