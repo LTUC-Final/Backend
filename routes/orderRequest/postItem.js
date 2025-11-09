@@ -81,7 +81,7 @@ if (!req.file) {
         bucket.name
       }/o/${encodeURIComponent(blob.name)}?alt=media&token=${token}`;
     }
-    console.log(req.body);
+    console.log("this is imageurl of firbase",imageUrl);
     const response = await pool.query(
       `
   INSERT INTO products (provider_id,category_id,name,location,description,price,type_of_product,image
