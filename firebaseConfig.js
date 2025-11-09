@@ -9,8 +9,8 @@ const serviceAccount = require(path.join(
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  // storageBucket: "job-tracker-b9e24.appspot.com",
-  storageBucket: "job-tracker-b9e24.firebasestorage.app",
+  storageBucket: "job-tracker-b9e24.appspot.com",
+  // storageBucket: "job-tracker-b9e24.firebasestorage.app",
 });
 
 const bucket = admin.storage().bucket();
