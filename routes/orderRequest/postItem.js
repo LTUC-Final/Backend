@@ -22,6 +22,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post("/postItem", upload.single("image"), async (req, res) => {
+  console.log("BODY:", req.body);
+  console.log("FILE:", req.file);
   try {
     const {
       type,
@@ -35,6 +37,9 @@ router.post("/postItem", upload.single("image"), async (req, res) => {
     } = req.body;
     // const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     let imageUrl = null;
+    
+console.log("this is data for req postItem",req.file)
+console.log("ASdasdasd");
 
     if (req.file) {
       const file = req.file;
