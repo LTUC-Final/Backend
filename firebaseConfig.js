@@ -36,7 +36,7 @@ const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "job-tracker-b9e24.appspot.com", // your Firebase storage bucket
+  storageBucket: "job-tracker-b9e24.firebasestorage.app", // your Firebase storage bucket
 });
 
 const bucket = admin.storage().bucket();
