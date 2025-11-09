@@ -67,8 +67,8 @@ router.get("/create-account-link/:provider_id", async (req, res) => {
 
     const accountLink = await stripe.accountLinks.create({
       account: accountId,
-      refresh_url: `http://localhost:${portFront}/reauth`,
-      return_url: `http://localhost:${portFront}/paymentsProvider`,
+      refresh_url: `https://frontend-fzb2.onrender.com/reauth`,
+      return_url: `https://frontend-fzb2.onrender.com/paymentsProvider`,
       type: "account_onboarding",
     });
 
@@ -168,8 +168,8 @@ router.post("/add-test-funds", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: "http://localhost:5173/success",
-      cancel_url: "http://localhost:5173/cancel",
+      success_url: "https://frontend-fzb2.onrender.com/success",
+      cancel_url: "https://frontend-fzb2.onrender.com/cancel",
     });
 
     res.json({ url: session.url });

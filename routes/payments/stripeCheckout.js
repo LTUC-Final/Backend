@@ -57,8 +57,8 @@ WHERE c.customer_id = $1 AND c.status_pay = 'Approve';
         cart_ids: products.map((p) => p.cart_id).join(","),
         customer_id: customer_id,
       },
-      success_url: `http://localhost:${portFront}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:${portFront}/cancel`,
+      success_url: `https://frontend-fzb2.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://frontend-fzb2.onrender.com/cancel`,
     });
 
     res.json({ id: session.id });
@@ -271,8 +271,8 @@ router.post("/create-multi-provider-sessions", async (req, res) => {
           provider_id,
           cart_ids: cartIds,
         },
-        success_url: `http://localhost:${portFront}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:${portFront}/cancel`,
+        success_url: `https://frontend-fzb2.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://frontend-fzb2.onrender.com/cancel`,
       });
 
       sessions.push({
@@ -818,8 +818,8 @@ router.post("/create-checkout-session-all", async (req, res) => {
         cart_ids: approvedProducts.map((p) => p.cart_id).join(","),
         mapping: encodedMapping,
       },
-      success_url: `http://localhost:${portFront}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:${portFront}/cancel`,
+      success_url: `https://frontend-fzb2.onrender.com/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://frontend-fzb2.onrender.com/cancel`,
     });
 
     console.log(" Created unified Stripe session:", session.id);
