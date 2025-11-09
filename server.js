@@ -15,14 +15,18 @@ const app = express();
 
 app.use(cors({
   origin: "https://frontend-fzb2.onrender.com",
+
+
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // const webhook = require("./routes/payments/webhook");
 // app.use("/api/payments", webhook);
 
-app.use(express.json());
+// app.use(express.json());
 
 // app.use("/uploads", express.static("uploads"));
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
