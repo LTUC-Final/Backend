@@ -35,8 +35,10 @@ router.post("/postItem", upload.single("image"), async (req, res) => {
     } = req.body;
     // const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     let imageUrl = null;
+    
+console.log("this is data for req postItem",req.file)
+console.log("ASdasdasd");
 
-    console.log("this is data for req postItem", req.file)
     if (req.file) {
       const file = req.file;
       // const fileName = `${Date.now()}_${file.originalname}`;
@@ -67,8 +69,9 @@ router.post("/postItem", upload.single("image"), async (req, res) => {
         },
       });
 
-      imageUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name
-        }/o/${encodeURIComponent(blob.name)}?alt=media&token=${token}`;
+      imageUrl = `https://firebasestorage.googleapis.com/v0/b/${
+        bucket.name
+      }/o/${encodeURIComponent(blob.name)}?alt=media&token=${token}`;
     }
     console.log(req.body);
     const response = await pool.query(
