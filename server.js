@@ -14,7 +14,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://frontend-fzb2.onrender.com",
+  origin: "*",
 
 
   methods: ["GET", "POST", "PUT", "DELETE"],
