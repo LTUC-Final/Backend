@@ -17,7 +17,7 @@ const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 
 app.use(cors({
-  origin: "*",
+  origin: "https://frontend-fzb2.onrender.com",
 
 
   methods: ["GET", "POST", "PUT", "DELETE"],
