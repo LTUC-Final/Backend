@@ -13,6 +13,9 @@ const app = express();
 // const routeGuard2 = require("./middleware/verifyToken.js");
 
 
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+
+
 app.use(cors({
   origin: "*",
 
@@ -51,7 +54,6 @@ app.use("/api", Ess);
 const getMessages = require("./routes/socket/GetMessages.js");
 app.use("/api", getMessages);
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const loginRoute = require("./routes/login/login");
 const registerRoute = require("./routes/register/register");
 
